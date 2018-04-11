@@ -1,0 +1,94 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+/* =============== Content 1 ======================== */
+.content1{
+    margin: 20px auto;
+    width: 600px;
+    border: 1px solid #cfc;
+    padding: 10px;
+    background: url("images/notebook_background.jpg") no-repeat top center;
+    min-height: 200px;
+}
+
+.content1 h1{
+    text-align: center;
+    color: red;
+}
+
+.content1 ul{
+    margin: 23px 0 0 100px;
+    list-style: decimal inside;
+}
+
+.content1 ul li{
+    margin-top: 6px;
+}
+
+/* =============== Content 2 ======================== */
+.content2{
+    margin: 20px auto;
+    width: 800px;
+    border: 1px solid #cfc;
+    padding: 10px;
+}
+
+.content2 h1{
+    text-align: center;
+    color: red;
+}
+
+.content2 ul{
+    margin: 23px;
+}
+
+.content2 ul li{
+    margin-top: 6px;
+    display: inline-block;
+    margin-left: 30px;
+}
+
+.content2 ul li a{
+    display: block;
+    width: 210px;
+    height: 188px;
+}
+
+.content2 div.result{
+    margin-left: 320px;
+}
+
+/* =============== Content 3 ======================== */
+.content3{
+    margin: 20px auto;
+    width: 300px;
+    border: 1px solid #cfc;
+    padding: 10px;
+}
+
+.content3 h1{
+    text-align: center;
+    color: red;
+}
+
+.content3 div.image{
+    margin-top: 20px 0;
+    text-align: center;
+}
+
+.content3 div.image img{
+    margin-top: 10px 0;
+}
+
+.content3 div.image a{
+    display: inline-block;
+    background-color: antiquewhite;
+    padding: 3px 10px;
+    text-decoration: none;
+}
+
+.content3 div.image a:hover{
+    color: brown;
+}
