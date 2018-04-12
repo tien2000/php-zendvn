@@ -92,3 +92,85 @@
 .content3 div.image a:hover{
     color: brown;
 }
+
+/* =============== Content 4 ======================== */
+.content4{
+    margin: 20px auto;
+    width: 500px;
+    border: 1px solid #cfc;
+    padding: 10px;
+}
+
+.content4 h1{
+    text-align: center;
+    color: red;
+}
+
+.content4 .question p{
+    text-align: center;
+}
+
+.content4 .question p:last-child{
+    text-align: right;
+    font-style: italic;
+}
+
+.content4 .answer p{
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.content4 .answer ul{
+    list-style: none;
+    text-align: center;
+}
+
+/* =============== Content 5 ======================== */
+.clr{
+    clear: both;
+}
+
+.content5{
+    margin: 20px auto;
+    width: 500px;
+    border: 1px solid #cfc;
+    padding: 10px;
+    min-height: 200px;
+}
+
+.content5 h1{
+    text-align: center;
+    color: red;
+}
+
+.content5 .demoChangeMoney{
+    text-align: center;
+    line-height: 35px;
+}
+
+.content5 .demoChangeMoney img{
+    float: left;
+}
+
+.content5 input[type="text"]{
+    padding: 3px 5px;
+}
+
+.content5 input[type="submit"]{
+    padding: 3px 5px;
+}
+
+.content5 .result{
+    margin-top: 10px;
+}
+
+.content5 .totalPrice{
+    font-size: 20px;
+    margin-top: 10px;
+    text-align: right;
+}
+
+.content5 .totalPrice strong{
+    color: red;
+    font-weight: bold;
+}
