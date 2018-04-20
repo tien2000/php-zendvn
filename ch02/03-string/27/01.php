@@ -1,12 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-</head>
-<body>
-    <h1>HTML entities &copy;</h1>
-</body>
-</html>
+<?php
+    $str = "<strong>NeoTien</strong> is Me";
+
+    echo "Input: " . $str . "<br>";
+
+    $str = htmlspecialchars($str);  // Chuyển đổi ký tự đặc biệt thành html entity.
+
+    echo "Output: " . $str . "<br>";
+?>
