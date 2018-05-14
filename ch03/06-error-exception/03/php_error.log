@@ -1,0 +1,2 @@
+[14-May-2018 06:37:06 Europe/Berlin] PHP Notice:  Undefined variable: arr in E:\xampp\htdocs\php-zendvn\ch03\06-error-exception\03\02.php on line 6
+[14-May-2018 06:37:06 Europe/Berlin] PHP Warning:  Invalid argument supplied for foreach() in E:\xampp\htdocs\php-zendvn\ch03\06-error-exception\03\02.php on line 6
