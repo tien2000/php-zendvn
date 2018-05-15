@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="03.xsl"?>
+
+<book>
+    <title>Lập trình Zend Framework</title>
+    <author>ZendVN</author>
+    <pages>200</pages>
+    <weight units="gram">600</weight>
+</book>

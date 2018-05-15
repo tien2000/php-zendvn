@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="05.xsl"?>
+
+<book_store>
+    <book>
+        <title>Lập trình PHP</title>
+        <author>ZendVN</author>
+        <pages>200</pages>
+        <weight units="gram">700</weight>
+    </book>
+
+    <book>
+        <title>Lập trình Wordpress</title>
+        <author>ZendVN</author>
+        <pages>300</pages>
+        <weight units="gram">300</weight>
+    </book>
+
+    <book>
+        <title>Lập trình Zend Framework</title>
+        <author>ZendVN</author>
+        <pages>400</pages>
+        <weight units="kg">1.5</weight>
+    </book>
+</book_store>
