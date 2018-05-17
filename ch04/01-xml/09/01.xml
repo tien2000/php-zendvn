@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="01.xsl"?>
+
+<book_store>
+    <book id="11">
+        <title>Lập trình PHP</title>
+        <author>ZendVN</author>
+        <pages>400</pages>
+        <weight units="gram">700</weight>
+        <price>
+            <real>35.00</real>
+            <sale-off>25.00</sale-off>
+        </price>
+        <shipping>
+            <US>1.3</US>
+            <EU>2.3</EU>
+            <EVN>3.3</EVN>
+        </shipping>
+    </book>
+
+    <book id="22">
+        <title>Lập trình Wordpress</title>
+        <author>ZendVN</author>
+        <pages>200</pages>
+        <weight units="gram">300</weight>
+        <price>
+            <real>25.00</real>
+            <sale-off>15.00</sale-off>
+        </price>
+        <shipping>
+            <US>1.1</US>
+            <EU>2.1</EU>
+            <EVN>3.1</EVN>
+        </shipping>
+    </book>
+
+    <book>
+        <title>Lập trình Zend FrameWork</title>
+        <author>ZendVN</author>
+        <pages>500</pages>
+        <weight units="gram">600</weight>
+        <price>
+            <real>45.00</real>
+            <sale-off>35.00</sale-off>
+        </price>
+        <shipping>
+            <US>3.1</US>
+            <EU>4.1</EU>
+            <EVN>5.1</EVN>
+        </shipping>
+    </book>
+</book_store>
