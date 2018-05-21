@@ -34,7 +34,7 @@
         </shipping>
     </book>
 
-    <book id="33" tag="zend">>
+    <book tag="zend">
         <title>Lập trình Zend Framework</title>
         <author>ZendVN</author>
         <pages>500</pages>

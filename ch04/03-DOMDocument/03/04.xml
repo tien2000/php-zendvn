@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <book>
   <title>Lập trình PHP</title>
-  <author>ZendVN</author>
+  <weigth>100</weigth>
   <pages>500</pages>
 </book>
