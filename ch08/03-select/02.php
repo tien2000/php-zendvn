@@ -21,7 +21,7 @@
 <?php 
     // =========================
     // mysqli_num_rows: Đếm số dòng hiển thị
-    // =========================
+    // =========================    
 
     // Kết nối
     @$conn = mysqli_connect('localhost', 'root', '') or die('Cannot Connect to Database');
