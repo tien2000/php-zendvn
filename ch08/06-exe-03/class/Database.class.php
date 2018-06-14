@@ -50,9 +50,8 @@
         public function insert($data, $type = 'single'){
             if ($type == 'single') {
                 $newQuery = $this->createInsertSQL($data);
-
-                $sql = "INSERT INTO `$this->_table`(". $newQuery['cols'] .") VALUES (". $newQuery['vals'] .")";    
-
+                $sql      = "INSERT INTO `$this->_table`(". $newQuery['cols'] .") VALUES (". $newQuery['vals'] .")";    
+                
                 $this->query($sql);
             } else {
                 foreach ($data as $value) {
@@ -78,6 +77,7 @@
             $newWhere = $this->createWhereDeleteSQL($where);
 
             $sql = "DELETE FROM `$this->_table` WHERE `id` IN ($newWhere)";
+            
             $this->query($sql);
             return $this->affectedRow();
         }

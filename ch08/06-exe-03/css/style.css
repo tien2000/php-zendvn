@@ -123,6 +123,22 @@
 	padding: 15px;
 }
 
+#form ul.error{
+	margin: 10px 0;
+	padding: 5px;
+	border: 2px solid rgb(241, 238, 238);
+	background-color: #e5e2e2;
+	list-style: inside;
+}
+
+#form div.success{
+	margin: 10px 0;
+	padding: 5px;
+	border: 2px solid rgb(241, 238, 238);
+	background-color: #95dd74;
+	list-style: inside;
+}
+
 #form .row{
 	margin-bottom: 15px;
 	text-align: justify;
@@ -144,6 +160,11 @@
 #form .row textarea{
 	resize:none;
 	padding: 3px;
+}
+
+#form .row select{
+	padding: 3px;
+	width: 150px;
 }
 
 #form .row input[type=text]{
