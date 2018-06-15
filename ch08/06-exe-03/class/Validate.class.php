@@ -6,7 +6,6 @@ class Validate{
     private $_result  = array();
 
     public function __construct($source) {
-        if (array_key_exists('submit', $source)) unset($source['submit']);
         $this->_source = $source;
     }
 

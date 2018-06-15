@@ -12,6 +12,7 @@
     require_once "class/Validate.class.php";
     require_once "class/HTML.class.php";
     require_once "connect.php";
+    session_start();
 
     $error   = '';
     $success = '';
@@ -29,7 +30,16 @@
     }
 
     if (!empty($_POST)) {
-        $validate = new Validate($_POST);
+        if (@$_SESSION['token'] == $_POST['token']) {        // refesh page
+            unset($_SESSION['token']);
+            header('location: ' . $_SERVER['PHP_SELF']);
+            exit();
+        } else {
+            $_SESSION['token'] = $_POST['token'];
+        }
+
+        $source = array('name' => $_POST['name'], 'status' => $_POST['status'], 'ordering' => $_POST['ordering']);
+        $validate = new Validate($source);
         $validate->addRule('name', 'string', 2, 50)
                  ->addRule('status', 'status')
                  ->addRule('ordering', 'int', 1, 10);
@@ -71,6 +81,7 @@
                 <div class="row">
                     <input type="submit" value="Save" name="submit" id="save">
                     <input type="button" value="Cancel" name="cancel" id="cancel-button">
+                    <input type="hidden" value="<?php echo time(); ?>" name="token" />
                 </div>
             </form>
         </div>

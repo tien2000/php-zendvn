@@ -130,9 +130,9 @@
             $newWhere = '';
             if (!empty($data)) {
                 foreach ($data as $id) {
-                    $newWhere .= ", '". $id ."'";
-                    $newWhere = substr($newWhere, 1);
+                    $newWhere .= "'" . $id . "', ";
                 }
+                $newWhere .= "'0'";
             }            
             return $newWhere;
         }
