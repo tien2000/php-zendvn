@@ -189,5 +189,9 @@
             if (mysqli_num_rows($this->_resultQuery) > 0) return true;
             return false;
         }
+
+        public function realEscapeString($escapestr){
+            return mysqli_real_escape_string($this->_connect, $escapestr);
+        }
     }
 ?>
