@@ -5,13 +5,7 @@
 <link rel="stylesheet" type="text/css" href="css/style.css">
 <title>PHP FILE</title>
 <script type="text/javascript" src="js/jquery-1.10.2.min.js"></script>
-<script type="text/javascript">
-	$(document).ready(function(){
-		$('#cancel-button').click(function(){
-			window.location = 'index.php';
-		});
-	});
-</script>
+<script type="text/javascript" src="js/tls-script.js"></script>
 </head>
 
     <?php
@@ -20,7 +14,7 @@
         $query  = "SELECT * FROM `$params[table]` WHERE `id` = '$id'";
         $notice = '';
         $xhtml  = '';
-        $item   = $db->singleRecord($query);       
+        $item   = $db->singleRecord($query);    
         
         if (!empty($item)) {
             $status = ($item['status'] == 0) ? 'Inactive' : 'Active';
@@ -46,7 +40,8 @@
                             <input type="button" value="Cancel" name="cancel" id="cancel-button">
                         </div>';
         } else {
-            $xhtml  = 'Group is not exist';
+            header('location: errors.php');
+            exit();
         }
         
         if (isset($_POST['submit'])) {
@@ -68,7 +63,7 @@
             </form>    
 		<?php
 			}else{
-				echo '<p>Dữ liệu đã được xóa thành công! Click vào <a href="index.php">đây</a> để quay về trang chủ</p>';
+				echo '<div class="success">Dữ liệu đã được xóa thành công! Click vào <a href="index.php">đây</a> để quay về trang chủ</div>';
 			} 
 		?>     
         </div>

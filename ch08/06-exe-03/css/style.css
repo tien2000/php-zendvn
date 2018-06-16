@@ -131,10 +131,11 @@
 	list-style: inside;
 }
 
-#form div.success{
+div.success{
 	margin: 10px 0;
-	padding: 5px;
+	padding: 10px;
 	border: 2px solid rgb(241, 238, 238);
+	color: #ffffff;
 	background-color: #95dd74;
 	list-style: inside;
 }

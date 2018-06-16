@@ -10,10 +10,10 @@
 </head>
 <body>
     <div id="wrapper">
-        <div class="title">MASSSAGE</div>
+        <div class="title">MESSAGE</div>
         <div id="form">
-            <div class="success">Yêu cầu không thực hiện được
-            <p>Dữ liệu đã được sửa thành công! Click vào <a href="index.php">đây</a> để quay về trang chủ</p>
+            <div class="error">Yêu cầu không thực hiện được
+            <p>Click vào <a href="index.php">đây</a> để quay về trang chủ</p>
             </div>
         </div>
     </div>
