@@ -30,7 +30,7 @@ class Validate{
         foreach ($this->_rules as $elemt => $value) {
             if ($value['required'] == true && trim($this->_source[$elemt] == null)) {
                 $this->_errors[$elemt] = 'is not Empty';
-            } else {
+            } else {    
                 switch ($value['type']) {
                     case 'int':                
                         $this->validateInt($elemt, $value['min'], $value['max']);
@@ -39,13 +39,19 @@ class Validate{
                         $this->validateString($elemt, $value['min'], $value['max']);
                         break;
                     case 'url':              
-                        $this->validateUrl($elemt, $value['min'], $value['max']);
+                        $this->validateUrl($elemt);
                         break;
                     case 'email':              
-                        $this->validateEmail($elemt, $value['min'], $value['max']);
+                        $this->validateEmail($elemt);
+                        break;
+                    case 'password':              
+                        $this->validatePassword($elemt);
+                        break;
+                    case 'date':              
+                        $this->validateDate($elemt, $value['min'], $value['max']);
                         break;
                     case 'status':              
-                        $this->validateStatus($elemt, $value['min'], $value['max']);
+                        $this->validateStatus($elemt);
                         break;
                 }
             }            
@@ -68,22 +74,36 @@ class Validate{
         if ($length < $min) {
             $this->_errors[$elemt] = "' " . $this->_source[$elemt]. " '" . ' too short';
         } else if ($length > $max) {
-            $this->_errors[$elemt] = "' " . $this->_source[$elemt]. " '" . 'too long';
+            $this->_errors[$elemt] = "' " . $this->_source[$elemt]. " '" . ' too long';
         } else if(!is_string($this->_source[$elemt])){
-            $this->_errors[$elemt] = "' " . $this->_source[$elemt]. " '" . 'This is not a String';
+            $this->_errors[$elemt] = "' " . $this->_source[$elemt]. " '" . ' is not a String';
         }        
     }
 
     public function validateUrl($elemt){
         if (!filter_var($this->_source[$elemt], FILTER_VALIDATE_URL)) {
-            $this->_errors[$elemt] = "' " . $this->_source[$elemt]. " '" . 'This is not a URL';
+            $this->_errors[$elemt] = "' " . $this->_source[$elemt]. " '" . ' is not a URL';
         }        
     }
 
     public function validateEmail($elemt){
+        echo 'email';
         if (!filter_var($this->_source[$elemt], FILTER_VALIDATE_EMAIL)) {
-            $this->_errors[$elemt] = "' " . $this->_source[$elemt]. " '" . 'This is not a Email';
+            $this->_errors[$elemt] = "' " . $this->_source[$elemt]. " '" . ' is not a Email';
         }        
+    }
+
+    public function validatePassword($elemt){
+        $pattern = '#^(?=.*\d)(?=.*[A-Z])(?=.*\W).{8,32}$#';
+        if (!preg_match($pattern, $this->_source[$elemt])) {
+            $this->_errors[$elemt] = "' " . $this->_source[$elemt]. " '" . ' is not a Password Type';
+        }
+    }
+
+    public function validateDate($elemt){
+        // if (!filter_var($this->_source[$elemt], FILTER_VALIDATE_EMAIL)) {
+        //     $this->_errors[$elemt] = "' " . $this->_source[$elemt]. " '" . ' is not a Email';
+        // }        
     }
 
     public function showErrors(){
