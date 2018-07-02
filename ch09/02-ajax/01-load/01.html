@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>AJAX</title>
+    <link rel="stylesheet" href="../css/style.css">
+
+    <script type="text/javascript" src="../js/jquery-1.10.2.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function(){ 
+            var url = "files/data.html";
+            var url2 = "files/data.php";
+            var url3 = "files/data.txt";
+            $("#content").load(url3);
+        });
+    </script>
+</head>
+<body>
+    <div id="wrapper">
+        <div class="title">Ajax - Load</div>
+        <div class="list">
+            <h3>.load(url [, data] [, complete(responseText, textStatus)])</h3>
+            <div id="content">Hello</div>
+        </div>
+    </div>
+</body>
+</html>
