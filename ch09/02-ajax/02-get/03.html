@@ -10,12 +10,15 @@
     <script type="text/javascript" src="../js/jquery-1.10.2.min.js"></script>
     <script type="text/javascript">
         $(document).ready(function(){ 
+            var id       = 2;
+            var url      = "files/course.php";
+            var dataSend = { 'id' : id };
+
             $('#process').click(function(){
-                var url  = "files/data.php?tls=" + Math.random();
-                var data = {'id' : 5, 'name': 'PHP'};
-                $("#content").load(url, data, function(responseText, textStatus){
-                    console.log(responseText);
-                    console.log(textStatus);        // 30s timeout
+                $.get(url, dataSend, function(data, status) {
+                    console.log(data);
+                    console.log(status);
+                    $("#content").html(data);
                 });
             });
         });
@@ -25,7 +28,7 @@
     <div id="wrapper">
         <div class="title">Ajax - Load</div>
         <div class="list">
-            <h3>.load(url [, data] [, complete(responseText, textStatus)])</h3>
+            <h3>$.get(url [, data] [, success(data, textStatus)], [, dataType])</h3>
             <input type="button" value="Process" id="process" name="process">
             <div id="content">Loading...</div>
         </div>

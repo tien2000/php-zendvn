@@ -4,19 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>AJAX</title>
+    <title>AJAX POST</title>
     <link rel="stylesheet" href="../css/style.css">
 
     <script type="text/javascript" src="../js/jquery-1.10.2.min.js"></script>
     <script type="text/javascript">
         $(document).ready(function(){ 
+            var url      = "files/book.xml";
+
             $('#process').click(function(){
-                var url  = "files/data.php?tls=" + Math.random();
-                var data = {'id' : 5, 'name': 'PHP'};
-                $("#content").load(url, data, function(responseText, textStatus){
-                    console.log(responseText);
-                    console.log(textStatus);        // 30s timeout
-                });
+                $.post(url, function(data, status) {
+                    // $("#content").html(result.id +' - '+ result.name);
+                    console.log(data);
+                }, 'xml');          // xml, html, json.
             });
         });
     </script>
@@ -25,7 +25,7 @@
     <div id="wrapper">
         <div class="title">Ajax - Load</div>
         <div class="list">
-            <h3>.load(url [, data] [, complete(responseText, textStatus)])</h3>
+            <h3>$.post(url [, data] [, success(data, textStatus)], [, dataType])</h3>
             <input type="button" value="Process" id="process" name="process">
             <div id="content">Loading...</div>
         </div>
