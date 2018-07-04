@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>AJAX - AJAX</title>
+    <link rel="stylesheet" href="../css/style.css">
+
+    <script type="text/javascript" src="../js/jquery-1.10.2.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function(){ 
+            $("#process").click(function(){
+                $.ajax({
+                    url     : "files/data-01.php",
+                    type    : "POST",
+                    data    : {"id": 1, "name" : "PHP"},
+                    timeout : 3000,                         // 3s
+                    success : function (data, status) {
+                        console.log(data);
+                        console.log(status);
+                    }
+                });
+            });
+        });
+    </script>
+</head>
+<body>
+    <div id="wrapper">
+        <div class="title">Ajax - Ajax</div>
+        <div class="list">
+            <div id="content-load">Reponse</div>
+        	<form action="#" method="post" name="login-form" id="login-form">
+				<div class="row">
+					<label>Username</label>
+					<input type="text" name="username" value="">
+				</div>
+				<div class="row">
+					<label>Password</label>
+					<input type="password" name="password" value="">		
+				</div>
+				<div class="row">
+					<input type="button" class="button" name="process" id="process" value="Submit">		
+				</div>				
+			</form> 
+        </div>
+    </div>
+</body>
+</html>

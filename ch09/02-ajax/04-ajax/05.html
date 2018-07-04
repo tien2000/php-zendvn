@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>AJAX - AJAX</title>
+    <link rel="stylesheet" href="../css/style.css">
+
+    <script type="text/javascript" src="../js/jquery-1.10.2.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function(){ 
+            $("#process").click(function(){
+                $.ajax({
+                    url         : "files/data-02.php",
+                    type        : "GET",
+                    data        : {"id": 1, "name" : "PHP"},
+                    timeout     : 3000,                         // 3s
+                    cache       : false,
+                    dataType    : 'html',
+                    
+                    beforeSend  : function (jqXHR, setting) {
+                                        console.log('beforeSend');
+                                        setting.url = "files/data-01.php";
+                                    },
+                    dataFilter  : function (data, type) {
+                                        console.log('dataFilter');                                        
+                                        console.log(data);                                        
+                                        console.log(type);                                        
+                                    },
+                    success     : function (data, status) {
+                                        console.log(status);
+                                        $("#content-load").html(data);
+                                    },
+                    complete    : function (jqXHR, textStatus) {
+                                        console.log('complete');
+                                        console.log(textStatus);
+                                    }
+                    
+                });
+            });
+        });
+    </script>
+</head>
+<body>
+    <div id="wrapper">
+        <div class="title">Ajax - Ajax</div>
+        <div class="list">
+            <div id="content-load">Reponse</div>
+        	<form action="#" method="post" name="login-form" id="login-form">
+				<div class="row">
+					<input type="button" class="button" name="process" id="process" value="Submit">		
+				</div>				
+			</form> 
+        </div>
+    </div>
+</body>
+</html>
