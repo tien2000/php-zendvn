@@ -6,7 +6,7 @@ class Bootstrap{
 
         $controllerName = ucfirst($controllerURL);
 
-        $file = "controllers/". $controllerURL .".php";
+        $file = CONTROLLERS_PATH. $controllerURL .".php";
 
         if (file_exists($file)) {
             require_once $file;
@@ -14,6 +14,7 @@ class Bootstrap{
 
             if (method_exists($controllerName, $actionURL)) {
                 $controller->$actionURL();
+                $controller->loadModel($controllerURL);
             } else {
                 $this->errors();
             }
@@ -23,7 +24,7 @@ class Bootstrap{
     }
 
     public function errors(){
-        require_once "controllers/errors.php";
+        require_once CONTROLLERS_PATH . "errors.php";
         $errors = new Errors();
         $errors->index();
     }

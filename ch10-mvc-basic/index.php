@@ -1,8 +1,9 @@
 <?php
-    echo '<h1>MVC</h1>';
+    require_once "define.php";
+    
+    function __autoload($className){
+        require_once LIBS_PATH . "{$className}.php";
+    }
 
-    require_once "libs/Bootstrap.php";
-    require_once "libs/Controller.php";
-    require_once "libs/View.php";
     $bootstrap = new Bootstrap;
 ?>
