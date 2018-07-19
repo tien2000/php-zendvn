@@ -19,5 +19,6 @@
     define("DB_HOST", "localhost");
     define("DB_USER", "root");
     define("DB_PASS", "");
-    define("DB_NAME", "manage_user");
+    define("DB_NAME", "db_manage_user");
+    define("DB_TABLE", "user");
 ?>

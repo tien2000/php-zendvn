@@ -1,13 +1,18 @@
 <?php 
 class Group extends Controller{
-    public function index(){
-        // echo "<h3>". __METHOD__ ."</h3>";
+    public function __construct() {
+        parent::__construct();
 
-        $this->view->render("group/index", false);
+        Session::init();
+        if (Session::get("loggedIn") == false) {
+            $this->redirect('user', 'login');
+        }
     }
 
-    public function add(){
+    public function index(){
         // echo "<h3>". __METHOD__ ."</h3>";
+        
+        $this->view->render("group/index");        
     }
 }
 ?>

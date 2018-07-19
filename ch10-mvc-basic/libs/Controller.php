@@ -14,4 +14,9 @@ class Controller{
             $this->db = new $modelName();
         }
     }
+
+    public function redirect($controller = 'index', $action = 'index'){
+        header("location: index.php?controller=$controller&action=$action");
+        exit();
+    }
 }

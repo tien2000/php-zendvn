@@ -1,3 +1,15 @@
+<?php 
+    Session::init();
+    $menu = '<a class="index" href="index.php?controller=index&action=index">Home</a>';
+    if (Session::get('loggedIn') == true) {
+        $menu .= '<a class="group" href="index.php?controller=group&action=index">Group</a>';
+        $menu .= '<a class="user" href="index.php?controller=user&action=logout">Logout</a>';
+    } else {
+        $menu .= '<a class="user" href="index.php?controller=user&action=login">Login</a>';
+    }
+    
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -15,7 +27,5 @@
     <div class="wrapper">
         <div class="header">
             <h3>Header</h3>
-            <a class="index" href="index.php?controller=index&amp;action=index">Home</a>
-            <a class="login" href="index.php?controller=login&amp;action=index">Login</a>
-            <a class="group" href="index.php?controller=group&amp;action=index">Group</a>
+            <?php echo $menu; ?>
         </div>

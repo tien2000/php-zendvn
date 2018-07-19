@@ -13,8 +13,8 @@ class Bootstrap{
             $controller = new $controllerName();
 
             if (method_exists($controllerName, $actionURL)) {
-                $controller->$actionURL();
                 $controller->loadModel($controllerURL);
+                $controller->$actionURL();                
             } else {
                 $this->errors();
             }
