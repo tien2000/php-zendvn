@@ -10,6 +10,6 @@ $.urlParam = function(name){
 $(document).ready(function(){
     var controller = ($.urlParam('controller') == null) ? "index" : $.urlParam('controller');
     
-    console.log(controller);
+    // console.log(controller);
     $("div.header a." + controller).addClass('active');
 });

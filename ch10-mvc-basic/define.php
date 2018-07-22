@@ -10,6 +10,7 @@
 
     // ================= PATHS ====================
     define("ROOT_URL"           , "ch10-mvc-basic" . DS);     
+    define("VIEWS_URL"          , "views" . DS);     
     define("PUBLIC_URL"         , "public" . DS);     
     define("CSS_URL"            , PUBLIC_URL ."css" . DS);     
     define("JS_URL"             , PUBLIC_URL ."js" . DS);     

@@ -1,23 +1,47 @@
 <?php 
 class Bootstrap{
-    public function __construct() {
-        $controllerURL = (isset($_GET['controller'])) ? $_GET['controller'] : 'index' ;
-        $actionURL     = (isset($_GET['action']))     ? $_GET['action']     : 'index' ;
+    private $_url;
+    private $_controller;
 
-        $controllerName = ucfirst($controllerURL);
+    public function init() {
+        $this->setURL();        
+        if (!isset($this->_url['controller'])) {
+            $this->loadDefaultController();
+            exit();
+        }
 
-        $file = CONTROLLERS_PATH. $controllerURL .".php";
+        $this->loadExistController();
+        $this->callControllerMethod();
+    }
+
+    private function setURL(){
+        $this->_url = isset($_GET) ? $_GET : null;
+    }
+
+    private function loadDefaultController(){
+        require_once CONTROLLERS_PATH . "index.php";
+        $this->_controller = new Index();
+        $this->_controller->index();
+    }
+
+    private function loadExistController(){
+        $controllerName = ucfirst($this->_url['controller']);
+        $file = CONTROLLERS_PATH. $this->_url['controller'] .".php";
 
         if (file_exists($file)) {
             require_once $file;
-            $controller = new $controllerName();
+            $this->_controller = new $controllerName();    
+            $this->_controller->loadModel($this->_url['controller']);
+        } else {
+            $this->errors();
+        }
+    }
 
-            if (method_exists($controllerName, $actionURL)) {
-                $controller->loadModel($controllerURL);
-                $controller->$actionURL();                
-            } else {
-                $this->errors();
-            }
+    private function callControllerMethod(){
+        $controllerName = ucfirst($this->_url['controller']);
+        $actionURL      = $this->_url['action'];
+        if (method_exists($controllerName, $actionURL)) {
+            $this->_controller->$actionURL();
         } else {
             $this->errors();
         }

@@ -45,7 +45,7 @@
         }
 
         // SET TABLE
-        public function setTable(){
+        public function setTable($_table){
             $this->_table = $_table;
         }
 
