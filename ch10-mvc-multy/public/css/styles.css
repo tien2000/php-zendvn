@@ -1,0 +1,159 @@
+	*{
+		margin: 0px;
+		padding: 0px;
+	}
+	
+	body{
+		background-color: #e7e7e7;
+	}
+	
+	div.wrapper{
+		margin: 10px auto;
+		padding: 10px;
+		width: 90%;
+	}
+	
+	div.wrapper h3{
+		font-size: 20px;
+		margin-bottom: 15px;
+	}
+	
+	div.wrapper div.content h3{
+		color: red;
+	}
+	
+	div.wrapper > div{
+		padding: 10px;
+		min-height: 80px;
+	}
+	
+	div.header{
+		background: #fff;
+	}
+	
+	div.content{
+		background-color: #f4fbf9;	
+	}
+	
+	div.footer{
+		background: #fff;
+	}
+	
+	div.header a{
+		display: inline-block;
+		padding: 2px 10px;
+		background-color: #f1e8f1;
+		text-decoration: none;
+		color: #413d41;
+		margin-left: 10px;
+	}
+	
+	div.header a:hover, div.header a.active{
+		background-color: #b3f4dc;
+	}
+
+/* ======================================= FORM LOGIN ======================================= */
+
+	#form-login .row{
+		margin-bottom: 15px;
+		text-align: justify;
+	}
+	
+	#form-login .row p{
+		margin-bottom: 5px;
+		font-weight: bold;
+	}
+	
+	#form-login .row textarea{
+		resize:none;
+		padding: 3px;
+	}
+	
+	#form-login .row input[type=text], #form-login .row input[type=password]{
+		padding: 3px;
+		width: 500px;
+	}
+	
+	#form-login .row input[type=button], #form-login .row input[type=submit]{
+		padding: 5px 10px;
+	}
+	
+/* ======================================= ERROR ======================================= */
+	
+	ul.error{
+		display: block;
+		list-style: inside;
+		margin: 20px 0px;
+		background-color: #e2cae4;
+		padding: 10px;
+	}
+	
+	ul.error li{
+		line-height: 25px;
+	}
+
+/* ======================================= LIST ======================================= */
+	.list{
+		position: relative;
+	}
+	.list .row{
+		display: table;
+		width: 100%;
+		margin: 15px 0px;
+		border: 1px solid #CCC;
+		font: 13px Tahoma, Geneva, sans-serif;
+		background-color: #fff; 
+		
+	}
+	
+	.list .head{
+		text-align: center; 
+		font-weight: bold;
+	}
+	
+	.list .row .w-10, .list .row .action{
+		width: 10%;
+		text-align: center;	
+	}
+	
+	.list .row .action{
+		border-right: none;
+	}
+	
+	.list .row  a{
+		text-decoration: none;
+		color: #000;
+	}
+	
+	.list .row  a:hover{
+		text-decoration: underline;
+	}
+	
+	.list .row > p{
+		display: table-cell;
+		vertical-align: middle;
+		border-right: 1px solid #CCC;
+		text-align: center;
+		height: 30px;
+	}
+	
+	#area-button{
+		position: absolute;
+		top: -38px;
+		right: 0px;
+	}
+
+	#area-button a {
+		display: inline-block;
+		padding: 5px 10px;
+		width: 50px;
+		text-align: center;
+		text-decoration: none;
+		color: #000;
+		margin-left: 5px;
+		background: #c9e7e3;
+	}
+	
+	#area-button a:hover{
+		background: #a7e7df;
+	}
