@@ -7,3 +7,5 @@ ch06/02-phpmailer/library
 ch06/04-captcha/02-class/securimage
 ch06/05-simplepie/library
 ch10-mvc-multy/public/template/admin/main/images
+ch11-bookstore/public/template/admin/main/images
+ch11-bookstore/public/media
