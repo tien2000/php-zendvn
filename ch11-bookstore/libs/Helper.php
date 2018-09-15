@@ -46,5 +46,20 @@ class Helper{
                         </a>';
         return $xhtml;
     }
+
+    // Create Title sort
+    public static function cmsLinkSort($name, $column, $columnPost, $orderPost){
+        $arrowUpDown = ($orderPost == 'asc') ? 'up' : 'down' ;
+        $order       = ($orderPost == 'asc') ? 'desc' : 'asc' ;
+        $arrowSpan   = ''; 
+        if ($column == $columnPost) {            
+            $arrowSpan = '<span class="icon-arrow-'. $arrowUpDown .'-3"></span>';
+        }
+        $xhtml = '<a href="#" onclick="javascript:sortList(\''. $column .'\', \''. $order .'\')" class="js-stools-column-order hasPopover"
+                    data-order="'. $name .'" data-direction="'. $orderPost .'" data-name="'. $name .'"
+                    title="'. $name .'" data-content="Select to sort by this column" data-placement="top">
+                    '. $name . $arrowSpan .'</a>';
+        return $xhtml;
+    }
 }
 ?>

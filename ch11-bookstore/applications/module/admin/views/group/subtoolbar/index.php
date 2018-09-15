@@ -2,45 +2,28 @@
     <div class="clearfix">
         <div class="js-stools-container-selector">
             <div class="js-stools-field-selector">
-                <select id="client_id" name="client_id" onchange="jQuery('#filter_position, #filter_module, #filter_language, #filter_menuitem').val('');this.form.submit();"
-                    style="display: none;">
-                    <option value="0">Site</option>
+                <select id="client_id" name="client_id" onchange="jQuery('#filter_position, #filter_module, #filter_language, #filter_menuitem').val('');this.form.submit();">
+                    <option value="0" selected="selected">Site</option>
                     <option value="1">Administrator</option>
                 </select>
-                <div class="chzn-container chzn-container-single chzn-container-single-nosearch" style="width: 220px;" title="" id="client_id_chzn">
-                    <a class="chzn-single">
-                        <span>Site</span>
-                        <div>
-                            <b></b>
-                        </div>
-                    </a>
-                    <div class="chzn-drop">
-                        <div class="chzn-search">
-                            <input type="text" autocomplete="off" readonly="">
-                        </div>
-                        <ul class="chzn-results"></ul>
-                    </div>
-                </div>
             </div>
         </div>
-        <div class="js-stools-container-bar">
-
+        <div id="filter-bar" class="js-stools-container-bar">
             <label for="filter_search" class="element-invisible">
                 Search </label>
             <div class="btn-wrapper input-append">
-                <input type="text" name="filter[search]" id="filter_search" value="" placeholder="Search" data-original-title="" title="">
-                <button type="submit" class="btn hasTooltip" title="" aria-label="Search" data-original-title="Search">
+                <input type="text" name="filter[search]" id="filter_search" value="" placeholder="Search" />
+                <button name="search-keyword" style="height: 28px;" type="submit" class="btn hasTooltip" title="Search" aria-label="Search">
                     <span class="icon-search" aria-hidden="true"></span>
                 </button>
             </div>
             <div class="btn-wrapper hidden-phone">
-                <button type="button" class="btn hasTooltip js-stools-btn-filter" title="" data-original-title="Filter the list items.">
-                    Search Tools
-                    <span class="caret"></span>
+                <button type="button" class="btn hasTooltip js-stools-btn-filter" title="Filter the list items.">
+                    Search Tools <span class="caret"></span>
                 </button>
             </div>
             <div class="btn-wrapper">
-                <button type="button" class="btn hasTooltip js-stools-btn-clear" title="" data-original-title="Clear">
+                <button name="clear-keyword" type="button" class="btn hasTooltip js-stools-btn-clear" title="Clear">
                     Clear </button>
             </div>
         </div>
@@ -67,21 +50,7 @@
                         <option value="l.title DESC">Language descending</option>
                         <option value="a.id ASC">ID ascending</option>
                         <option value="a.id DESC">ID descending</option>
-                    </select>
-                    <div class="chzn-container chzn-container-single" style="width: 220px;" title="" id="list_fullordering_chzn">
-                        <a class="chzn-single">
-                            <span>Position ascending</span>
-                            <div>
-                                <b></b>
-                            </div>
-                        </a>
-                        <div class="chzn-drop">
-                            <div class="chzn-search">
-                                <input type="text" autocomplete="off">
-                            </div>
-                            <ul class="chzn-results"></ul>
-                        </div>
-                    </div>
+                    </select>                    
                 </div>
                 <div class="js-stools-field-list">
                     <select id="list_limit" name="list[limit]" class="input-mini" onchange="this.form.submit();" style="display: none;">
@@ -97,20 +66,6 @@
                         <option value="500">500</option>
                         <option value="0">All</option>
                     </select>
-                    <div class="chzn-container chzn-container-single" style="width: 60px;" title="" id="list_limit_chzn">
-                        <a class="chzn-single">
-                            <span>20</span>
-                            <div>
-                                <b></b>
-                            </div>
-                        </a>
-                        <div class="chzn-drop">
-                            <div class="chzn-search">
-                                <input type="text" autocomplete="off">
-                            </div>
-                            <ul class="chzn-results"></ul>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
@@ -125,20 +80,6 @@
                 <option value="1">Published</option>
                 <option value="*">All</option>
             </select>
-            <div class="chzn-container chzn-container-single chzn-container-single-nosearch" style="width: 220px;" title="" id="filter_state_chzn">
-                <a class="chzn-single">
-                    <span>- Select Status -</span>
-                    <div>
-                        <b></b>
-                    </div>
-                </a>
-                <div class="chzn-drop">
-                    <div class="chzn-search">
-                        <input type="text" autocomplete="off" readonly="" class="active">
-                    </div>
-                    <ul class="chzn-results"></ul>
-                </div>
-            </div>
         </div>
         <div class="js-stools-field-filter">
             <select id="filter_position" name="filter[position]" onchange="this.form.submit();" style="display: none;">
@@ -146,20 +87,6 @@
                 <option value="position-2">position-2</option>
                 <option value="position-7">position-7</option>
             </select>
-            <div class="chzn-container chzn-container-single chzn-container-single-nosearch" style="width: 220px;" title="" id="filter_position_chzn">
-                <a class="chzn-single">
-                    <span>- Select Position -</span>
-                    <div>
-                        <b></b>
-                    </div>
-                </a>
-                <div class="chzn-drop">
-                    <div class="chzn-search">
-                        <input type="text" autocomplete="off" readonly="" class="active">
-                    </div>
-                    <ul class="chzn-results"></ul>
-                </div>
-            </div>
         </div>
         <div class="js-stools-field-filter">
             <select id="filter_module" name="filter[module]" onchange="this.form.submit();" style="display: none;">
@@ -168,20 +95,6 @@
                 <option value="mod_login">Login</option>
                 <option value="mod_menu">Menu</option>
             </select>
-            <div class="chzn-container chzn-container-single chzn-container-single-nosearch" style="width: 220px;" title="" id="filter_module_chzn">
-                <a class="chzn-single">
-                    <span>- Select Type -</span>
-                    <div>
-                        <b></b>
-                    </div>
-                </a>
-                <div class="chzn-drop">
-                    <div class="chzn-search">
-                        <input type="text" autocomplete="off" readonly="" class="active">
-                    </div>
-                    <ul class="chzn-results"></ul>
-                </div>
-            </div>
         </div>
         <div class="js-stools-field-filter">
             <select id="filter_menuitem" name="filter[menuitem]" onchange="this.form.submit();" style="display: none;">
@@ -191,20 +104,6 @@
                     <option value="101">Home</option>
                 </optgroup>
             </select>
-            <div class="chzn-container chzn-container-single chzn-container-single-nosearch" style="width: 220px;" title="" id="filter_menuitem_chzn">
-                <a class="chzn-single">
-                    <span>- Select Menu Item -</span>
-                    <div>
-                        <b></b>
-                    </div>
-                </a>
-                <div class="chzn-drop">
-                    <div class="chzn-search">
-                        <input type="text" autocomplete="off" readonly="" class="active">
-                    </div>
-                    <ul class="chzn-results"></ul>
-                </div>
-            </div>
         </div>
         <div class="js-stools-field-filter">
             <select id="filter_access" name="filter[access]" onchange="this.form.submit();" style="display: none;">
@@ -215,20 +114,6 @@
                 <option value="3">Special</option>
                 <option value="6">Super Users</option>
             </select>
-            <div class="chzn-container chzn-container-single chzn-container-single-nosearch" style="width: 220px;" title="" id="filter_access_chzn">
-                <a class="chzn-single">
-                    <span>- Select Access -</span>
-                    <div>
-                        <b></b>
-                    </div>
-                </a>
-                <div class="chzn-drop">
-                    <div class="chzn-search">
-                        <input type="text" autocomplete="off" readonly="" class="active">
-                    </div>
-                    <ul class="chzn-results"></ul>
-                </div>
-            </div>
         </div>
         <div class="js-stools-field-filter">
             <select id="filter_language" name="filter[language]" onchange="this.form.submit();" style="display: none;">
@@ -236,20 +121,6 @@
                 <option value="*">All</option>
                 <option value="en-GB">English (en-GB)</option>
             </select>
-            <div class="chzn-container chzn-container-single chzn-container-single-nosearch" style="width: 220px;" title="" id="filter_language_chzn">
-                <a class="chzn-single">
-                    <span>- Select Language -</span>
-                    <div>
-                        <b></b>
-                    </div>
-                </a>
-                <div class="chzn-drop">
-                    <div class="chzn-search">
-                        <input type="text" autocomplete="off" readonly="" class="active">
-                    </div>
-                    <ul class="chzn-results"></ul>
-                </div>
-            </div>
         </div>
     </div>
 </div>
@@ -261,8 +132,10 @@
     </div>
     <div class="modal-body">
         <div class="container-fluid">
-            <p>If choosing to copy a module, any other actions selected will be applied to the copied module. Otherwise, all
-                actions are applied to the selected module. When copying and not changing position, it is nevertheless necessary
+            <p>If choosing to copy a module, any other actions selected will be applied to the copied module.
+                Otherwise, all
+                actions are applied to the selected module. When copying and not changing position, it is nevertheless
+                necessary
                 to select 'Keep Original Position' in the dropdown.</p>
             <div class="row-fluid">
                 <div class="control-group span6">
@@ -274,7 +147,8 @@
                             <option value="*">All</option>
                             <option value="en-GB">English (en-GB)</option>
                         </select>
-                        <div class="chzn-container chzn-container-single chzn-container-single-nosearch" style="width: 220px;" title="" id="batch_language_id_chzn">
+                        <div class="chzn-container chzn-container-single chzn-container-single-nosearch" style="width: 220px;"
+                            title="" id="batch_language_id_chzn">
                             <a class="chzn-single">
                                 <span>- Keep original Language -</span>
                                 <div>
@@ -302,7 +176,8 @@
                             <option value="3">Special</option>
                             <option value="6">Super Users</option>
                         </select>
-                        <div class="chzn-container chzn-container-single chzn-container-single-nosearch" style="width: 220px;" title="" id="batch_access_chzn">
+                        <div class="chzn-container chzn-container-single chzn-container-single-nosearch" style="width: 220px;"
+                            title="" id="batch_access_chzn">
                             <a class="chzn-single">
                                 <span>- Keep original Access Levels -</span>
                                 <div>
@@ -325,8 +200,9 @@
                         <label id="batch-choose-action-lbl" for="batch-choose-action">
                             Set Position </label>
                         <div id="batch-choose-action" class="control-group">
-                            <select id="batch-position-id" name="batch[position_id]" class="chzn-custom-value input-xlarge" data-custom_group_text="Active Positions"
-                                data-no_results_text="Add custom position" data-placeholder="Type or Select a Position" style="display: none;">
+                            <select id="batch-position-id" name="batch[position_id]" class="chzn-custom-value input-xlarge"
+                                data-custom_group_text="Active Positions" data-no_results_text="Add custom position"
+                                data-placeholder="Type or Select a Position" style="display: none;">
                                 <optgroup label="">
                                     <option value="" selected="selected"></option>
                                     <option value="nochange">Keep original Position</option>
@@ -397,7 +273,8 @@
                                     </label>
                                     <label for="batch[move_copy]m" id="batch[move_copy]m-lbl" class="radio">
 
-                                        <input type="radio" name="batch[move_copy]" id="batch[move_copy]m" value="m" checked="checked">Move
+                                        <input type="radio" name="batch[move_copy]" id="batch[move_copy]m" value="m"
+                                            checked="checked">Move
                                     </label>
                                 </div>
                             </div>

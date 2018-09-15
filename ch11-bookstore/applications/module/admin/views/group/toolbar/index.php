@@ -31,7 +31,7 @@
     $linkCancel     = URL::createLink('admin', 'group', 'cancel');
     $btnCancel      = Helper::cmsButton('cancel', 'toolbar-cancel', 'icon-cancel', 'button-cancel', $linkCancel);
 
-    switch ($this->_arrPagams['action']) {
+    switch ($this->_arrParams['action']) {
         case 'index':
             $strBtn = $btnNew . $btnPublish . $btnUnpublish . $btnTrash;
             break;

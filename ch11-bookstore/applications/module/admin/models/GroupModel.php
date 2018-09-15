@@ -6,9 +6,15 @@ class GroupModel extends Model{
     }
 
     public function listItems($arrParams, $options = null){
-        $query[] = "SELECT `id`, `name`, `group_acp`, `created`, `created_by`, `modified`, `modified_by`, `status`, `ordering`";
-        $query[] = "FROM `$this->_table`";
-
+        $query[]        = "SELECT `id`, `name`, `group_acp`, `created`, `created_by`, `modified`, `modified_by`, `status`, `ordering`";
+        $query[]        = "FROM `$this->_table`";
+        if (@$arrParams['filter_column'] && @$arrParams['filter_column_dir']) {
+            $column     = $arrParams['filter_column'];
+            $columnDir  = $arrParams['filter_column_dir'];
+            $query[]    = "ORDER BY `$column` $columnDir";
+        } else {
+            $query[]    = "ORDER BY `name` ASC";
+        }
         $query = implode(" ", $query);
         $result = $this->listRecord($query);
         return $result;
