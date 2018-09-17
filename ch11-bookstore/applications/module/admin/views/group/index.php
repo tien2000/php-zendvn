@@ -15,7 +15,7 @@
     $lblModified    = Helper::cmsLinkSort('Modified', 'modified', $columnPost, $orderPost);
     $lblModifiedBy  = Helper::cmsLinkSort('Modified By', 'modified_by', $columnPost, $orderPost);
     $lblOrdering    = Helper::cmsLinkSort('Ordering', 'ordering', $columnPost, $orderPost);
-    $lblId          = Helper::cmsLinkSort('Id', 'id', $columnPost, $orderPost);
+    $lblId          = Helper::cmsLinkSort('Id', 'id', $columnPost, $orderPost);    
 ?>
 
 <!-- container-fluid -->

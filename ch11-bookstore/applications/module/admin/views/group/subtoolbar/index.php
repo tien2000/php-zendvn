@@ -1,3 +1,9 @@
+<?php
+    // SELECTBOX : Search Tools
+    $arrStatus        = array(4 => "- Select Status -", 0 => "Unpublish", 1 => "Publish", 2 => "All");
+    @$selectBoxStatus = Helper::cmsSelectBox('status', $arrStatus, $this->_arrParams['filter']['status']);
+?>
+
 <div class="js-stools clearfix">
     <div class="clearfix">
         <div class="js-stools-container-selector">
@@ -12,7 +18,7 @@
             <label for="filter_search" class="element-invisible">
                 Search </label>
             <div class="btn-wrapper input-append">
-                <input type="text" name="filter[search]" id="filter_search" value="" placeholder="Search" />
+                <input type="text" name="filter[search]" id="filter-search" value="<?php echo @$this->_arrParams['filter']['search']?>" placeholder="Search" />
                 <button name="search-keyword" style="height: 28px;" type="submit" class="btn hasTooltip" title="Search" aria-label="Search">
                     <span class="icon-search" aria-hidden="true"></span>
                 </button>
@@ -23,7 +29,7 @@
                 </button>
             </div>
             <div class="btn-wrapper">
-                <button name="clear-keyword" type="button" class="btn hasTooltip js-stools-btn-clear" title="Clear">
+                <button name="clear-keyword" type="submit" class="btn hasTooltip js-stools-btn-clear" title="Clear">
                     Clear </button>
             </div>
         </div>
@@ -71,56 +77,9 @@
         </div>
     </div>
     <!-- Filters div -->
-    <div class="js-stools-container-filters hidden-phone clearfix" style="">
+    <div id="filter-select" class="js-stools-container-filters hidden-phone clearfix" style="">
         <div class="js-stools-field-filter">
-            <select id="filter_state" name="filter[state]" onchange="this.form.submit();" style="display: none;">
-                <option value="" selected="selected">- Select Status -</option>
-                <option value="-2">Trashed</option>
-                <option value="0">Unpublished</option>
-                <option value="1">Published</option>
-                <option value="*">All</option>
-            </select>
-        </div>
-        <div class="js-stools-field-filter">
-            <select id="filter_position" name="filter[position]" onchange="this.form.submit();" style="display: none;">
-                <option value="" selected="selected">- Select Position -</option>
-                <option value="position-2">position-2</option>
-                <option value="position-7">position-7</option>
-            </select>
-        </div>
-        <div class="js-stools-field-filter">
-            <select id="filter_module" name="filter[module]" onchange="this.form.submit();" style="display: none;">
-                <option value="" selected="selected">- Select Type -</option>
-                <option value="mod_breadcrumbs">Breadcrumbs</option>
-                <option value="mod_login">Login</option>
-                <option value="mod_menu">Menu</option>
-            </select>
-        </div>
-        <div class="js-stools-field-filter">
-            <select id="filter_menuitem" name="filter[menuitem]" onchange="this.form.submit();" style="display: none;">
-                <option value="" selected="selected">- Select Menu Item -</option>
-                <option value="-1">:: None ::</option>
-                <optgroup label="Main Menu">
-                    <option value="101">Home</option>
-                </optgroup>
-            </select>
-        </div>
-        <div class="js-stools-field-filter">
-            <select id="filter_access" name="filter[access]" onchange="this.form.submit();" style="display: none;">
-                <option value="" selected="selected">- Select Access -</option>
-                <option value="1">Public</option>
-                <option value="5">Guest</option>
-                <option value="2">Registered</option>
-                <option value="3">Special</option>
-                <option value="6">Super Users</option>
-            </select>
-        </div>
-        <div class="js-stools-field-filter">
-            <select id="filter_language" name="filter[language]" onchange="this.form.submit();" style="display: none;">
-                <option value="" selected="selected">- Select Language -</option>
-                <option value="*">All</option>
-                <option value="en-GB">English (en-GB)</option>
-            </select>
+            <?php echo $selectBoxStatus; ?>
         </div>
     </div>
 </div>

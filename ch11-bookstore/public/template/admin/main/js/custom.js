@@ -51,4 +51,18 @@ jQuery(document).ready(function($) {
             this.checked = checkAll;
         });
     });
+
+    $("#filter-bar button[name=search-keyword]").click(function (e) { 
+        $('#adminForm').submit();
+        
+    });
+
+    $("#filter-bar button[name=clear-keyword]").click(function (e) {
+        $("#filter-bar input[id=filter-search]").val('');
+        $('#adminForm').submit();
+    });
+
+    $("#filter-select select[id=filter_status]").change(function (e) {
+        $('#adminForm').submit();
+    });
 });
