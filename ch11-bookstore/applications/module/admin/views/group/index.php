@@ -15,7 +15,7 @@
     $lblModified    = Helper::cmsLinkSort('Modified', 'modified', $columnPost, $orderPost);
     $lblModifiedBy  = Helper::cmsLinkSort('Modified By', 'modified_by', $columnPost, $orderPost);
     $lblOrdering    = Helper::cmsLinkSort('Ordering', 'ordering', $columnPost, $orderPost);
-    $lblId          = Helper::cmsLinkSort('Id', 'id', $columnPost, $orderPost);    
+    $lblId          = Helper::cmsLinkSort('Id', 'id', $columnPost, $orderPost);  
 ?>
 
 <!-- container-fluid -->
@@ -76,15 +76,7 @@
                                     </th>
                                 </tr>
                             </thead>
-                            <tfoot>
-                                <tr>
-                                    <td colspan="10">
-                                        <div class="pagination pagination-toolbar clearfix">
-                                            <input type="hidden" name="limitstart" value="0">
-                                        </div>
-                                    </td>
-                                </tr>
-                            </tfoot>
+                            <?php include_once "pagination.php"; ?>
                             <tbody>
                                 <?php 
                                     if (!empty($this->Items)) {
@@ -159,6 +151,7 @@
                         </table>
                         <div>
                             <input type="hidden" name="filter_column" value="name">
+                            <input type="hidden" name="filter_page" value="1">
                             <input type="hidden" name="filter_column_dir" value="desc">
                         </div>
                 </form>

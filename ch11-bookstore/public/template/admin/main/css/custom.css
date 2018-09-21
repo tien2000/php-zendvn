@@ -1,0 +1,7 @@
+.pagination ul > li > a, .pagination ul > li > span{
+    height: 17px;
+}
+
+.pagination [class^="icon-"], [class*=" icon-"]{
+    line-height: 17px;
+}

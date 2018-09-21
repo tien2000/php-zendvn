@@ -10,9 +10,16 @@ class GroupController extends Controller{
     }
 
     public function indexAction(){
-        $this->_view->_title = 'Users: Groups';
-        $this->_view->Items =  $this->_model->listItems($this->_arrParams, null);
-        $this->_view->render('group/index');
+        $this->_view->_title = 'Users: Groups';        
+
+        // Pagination
+        $configPagination = array('totalItemsPerPage' => 5, 'pageRange' => 3);
+        $this->setPagination($configPagination);
+        $totalItems              = $this->_model->countItems($this->_arrParams, null);        
+        $this->_view->pagination = new Pagination($totalItems, $this->_pagination);
+        $this->_view->Items      =  $this->_model->listItems($this->_arrParams, null);
+        
+        $this->_view->render('group/index');        
     }
 
     public function addAction(){

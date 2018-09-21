@@ -64,9 +64,10 @@ class Helper{
 
     // Create Select Box
     public static function cmsSelectBox($id = 'default', $arrVal = array(), $keySelect = 0){
-        $xhtml = '<select id="filter_'. $id .'" name="filter['. $id .']" style="display: none;">';
+        $xhtml = '<select id="filter_'. $id .'" name="filter['. $id .']" style="display: none;">'; 
         foreach ($arrVal as $key => $value) {
             if ($key == $keySelect) {
+                // $xhtml .= '<option value="'. $key .'" selected="selected">'. $value .'</option>';
                 $xhtml .= '<option value="'. $key .'" selected="selected">'. $value .'</option>';
             } else {
                 $xhtml .= '<option value="'. $key .'">'. $value .'</option>';

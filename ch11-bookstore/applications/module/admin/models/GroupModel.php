@@ -5,7 +5,34 @@ class GroupModel extends Model{
         $this->setTable(TBL_GROUP);
     }
 
+    public function countItems($arrParams, $options = null){
+        $flagWhere      = false;
+        $query[]        = "SELECT count(`id`) AS `total`";
+        $query[]        = "FROM `$this->_table`";
+        
+        // FILTER: KEYWORD
+        if (!empty($arrParams['filter']['search'])) {
+            $keyword = "%" . $arrParams['filter']['search'] . "%";
+            $query[]    = "WHERE `name` LIKE '". $keyword ."'";
+            $flagWhere  = true;
+        }
+
+        // FILTER: STATUS
+        if (isset($arrParams['filter']['status']) && $arrParams['filter']['status'] < 2) {
+            if ($flagWhere == true) {
+                $query[]    = "AND `status` = '". $arrParams['filter']['status'] ."'";
+            } else {
+                $query[]    = "WHERE `status` = '". $arrParams['filter']['status'] ."'";
+            }
+        }      
+
+        $query = implode(" ", $query);
+        $result = $this->singleRecord($query);
+        return $result['total'];
+    }
+
     public function listItems($arrParams, $options = null){
+        $flagWhere      = false;
         $query[]        = "SELECT `id`, `name`, `group_acp`, `created`, `created_by`, `modified`, `modified_by`, `status`, `ordering`";
         $query[]        = "FROM `$this->_table`";
         
@@ -13,11 +40,16 @@ class GroupModel extends Model{
         if (!empty($arrParams['filter']['search'])) {
             $keyword = "%" . $arrParams['filter']['search'] . "%";
             $query[]    = "WHERE `name` LIKE '". $keyword ."'";
+            $flagWhere  = true;
         }
 
         // FILTER: STATUS
         if (isset($arrParams['filter']['status']) && $arrParams['filter']['status'] < 2) {
-            $query[]    = "WHERE `status` = '". $arrParams['filter']['status'] ."'";
+            if ($flagWhere == true) {
+                $query[]    = "AND `status` = '". $arrParams['filter']['status'] ."'";
+            } else {
+                $query[]    = "WHERE `status` = '". $arrParams['filter']['status'] ."'";
+            }            
         }
 
         // SORT
@@ -27,6 +59,15 @@ class GroupModel extends Model{
             $query[]    = "ORDER BY `$column` $columnDir";
         } else {
             $query[]    = "ORDER BY `name` ASC";
+        }        
+
+        // PAGINATION
+        $pagination         = $arrParams['pagination'];
+        $totalItemsPerPage  = $pagination['totalItemsPerPage'];
+        
+        if ($totalItemsPerPage > 0) {
+            $pos = ($pagination['currentPage'] - 1) * $totalItemsPerPage;
+            $query[] = "LIMIT $pos, $totalItemsPerPage";
         }        
 
         $query = implode(" ", $query);
@@ -40,8 +81,12 @@ class GroupModel extends Model{
             $id = $arrParams['id'];
             $query = "UPDATE `$this->_table` SET `status` = $status WHERE `id` = $id";
             $this->query($query);
-
-            return array($id, $status, URL::createLink('admin', 'group', 'ajaxStatus', array('id' => $id, 'status' => $status)));
+            $result = array(
+                            'id'        => $id,
+                            'status'    => $status,
+                            'link'      => URL::createLink('admin', 'group', 'ajaxStatus', array('id' => $id, 'status' => $status))
+                        );
+            return $result;
         }
 
         if ($options['task'] == 'ajax-change-group-acp') {
@@ -50,7 +95,11 @@ class GroupModel extends Model{
             $query = "UPDATE `$this->_table` SET `group_acp` = $group_acp WHERE `id` = $id";
             $this->query($query);
 
-            return array($id, $group_acp, URL::createLink('admin', 'group', 'ajaxGroupACP', array('id' => $id, 'group_acp' => $group_acp)));
+            $result = array(
+                'id'            => $id,
+                'group_acp'     => $group_acp,
+                'link'          => URL::createLink('admin', 'group', 'ajaxGroupACP', array('id' => $id, 'group_acp' => $group_acp)));
+            return $result;
         }
 
         if ($options['task'] == 'change-status') {

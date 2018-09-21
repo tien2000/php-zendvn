@@ -1,33 +1,27 @@
 function changeStatus(url) {
     $.get(url, function(data) {
-        var id = data[0];
-        var status = data[1];
-        var link = data[2];
-        var elemt = "a#status-" + id;
+        var elemt = "a#status-" + data['id'];
         var classRemove = 'icon-publish';
         var classAdd = 'icon-unpublish';
-        if (status == 1) {
+        if (data['status'] == 1) {
             classRemove = 'icon-unpublish';
             classAdd = 'icon-publish';
         }
-        $(elemt).attr('href', "javascript:changeStatus('" + link + "')");
+        $(elemt).attr('href', "javascript:changeStatus('" + data['link'] + "')");
         $(elemt + ' span').removeClass(classRemove).addClass(classAdd);
     }, 'json');
 };
 
 function changeGroupACP(url) {
     $.get(url, function(data) {
-        var id = data[0];
-        var group_acp = data[1];
-        var link = data[2];
-        var elemt = "a#group-acp-" + id;
+        var elemt = "a#group-acp-" + data['id'];
         var classRemove = 'icon-publish';
         var classAdd = 'icon-unpublish';
-        if (group_acp == 1) {
+        if (data['group_acp'] == 1) {
             classRemove = 'icon-unpublish';
             classAdd = 'icon-publish';
         }
-        $(elemt).attr('href', "javascript:changeGroupACP('" + link + "')");
+        $(elemt).attr('href', "javascript:changeGroupACP('" + data['link'] + "')");
         $(elemt + ' span').removeClass(classRemove).addClass(classAdd);
     }, 'json');
 };
@@ -41,6 +35,11 @@ function submitForm(url) {
 function sortList(column, order) {
     $('input[name=filter_column]').val(column);
     $('input[name=filter_column_dir]').val(order);
+    $('#adminForm').submit();
+}
+
+function changePage(page) {
+    $('input[name=filter_page]').val(page);
     $('#adminForm').submit();
 }
 
