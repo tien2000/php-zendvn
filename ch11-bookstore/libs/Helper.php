@@ -76,5 +76,18 @@ class Helper{
         $xhtml .= '</select>';
         return $xhtml;
     }
+
+    // Create Message
+    public static function cmsMessage($message){
+        $xhtml = '';
+        if (!empty($message)) {
+            $xhtml = '<div class="alert alert-'. $message['class'] .'">
+                            <button type="button" class="close" data-dismiss="alert">×</button>
+                            <h4 class="alert-heading">'. $message['content'] .'</h4>
+                            <div class="alert-message">'. $message['items'] .'</div>
+                        </div>';
+        }
+        return $xhtml;
+    }
 }
 ?>

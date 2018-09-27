@@ -18,11 +18,12 @@ class GroupModel extends Model{
         }
 
         // FILTER: STATUS
-        if (isset($arrParams['filter']['status']) && $arrParams['filter']['status'] < 2) {
+        if (isset($arrParams['filter']['status']) && $arrParams['filter']['status'] != 'default') {
+            $status = ($arrParams['filter']['status'] == 'unpublish') ? 0 : 1 ;
             if ($flagWhere == true) {
-                $query[]    = "AND `status` = '". $arrParams['filter']['status'] ."'";
+                $query[]    = "AND `status` = '". $status ."'";
             } else {
-                $query[]    = "WHERE `status` = '". $arrParams['filter']['status'] ."'";
+                $query[]    = "WHERE `status` = '". $status ."'";
             }
         }      
 
@@ -44,11 +45,12 @@ class GroupModel extends Model{
         }
 
         // FILTER: STATUS
-        if (isset($arrParams['filter']['status']) && $arrParams['filter']['status'] < 2) {
+        if (isset($arrParams['filter']['status']) && $arrParams['filter']['status'] != 'default') {
+            $status = ($arrParams['filter']['status'] == 'unpublish') ? 0 : 1 ;
             if ($flagWhere == true) {
-                $query[]    = "AND `status` = '". $arrParams['filter']['status'] ."'";
+                $query[]    = "AND `status` = '". $status ."'";
             } else {
-                $query[]    = "WHERE `status` = '". $arrParams['filter']['status'] ."'";
+                $query[]    = "WHERE `status` = '". $status ."'";
             }            
         }
 
@@ -86,6 +88,7 @@ class GroupModel extends Model{
                             'status'    => $status,
                             'link'      => URL::createLink('admin', 'group', 'ajaxStatus', array('id' => $id, 'status' => $status))
                         );
+            Session::set('message', array('class' => 'success', 'content' => 'Update Successfully!', 'items' => ''));
             return $result;
         }
 
@@ -96,9 +99,11 @@ class GroupModel extends Model{
             $this->query($query);
 
             $result = array(
-                'id'            => $id,
-                'group_acp'     => $group_acp,
-                'link'          => URL::createLink('admin', 'group', 'ajaxGroupACP', array('id' => $id, 'group_acp' => $group_acp)));
+                                'id'            => $id,
+                                'group_acp'     => $group_acp,
+                                'link'          => URL::createLink('admin', 'group', 'ajaxGroupACP', array('id' => $id, 'group_acp' => $group_acp))
+                            );
+            Session::set('message', array('class' => 'success', 'content' => 'Update Successfully!', 'items' => ''));
             return $result;
         }
 
@@ -107,8 +112,12 @@ class GroupModel extends Model{
             if (!empty($arrParams['cid'])) {
                 $ids   = $this->createWhereDeleteSQL($arrParams['cid']);
                 $query = "UPDATE `$this->_table` SET `status` = $status WHERE `id` IN ($ids)";
-                $this->query($query);    
-            }            
+                $this->query($query);
+                $statusMessage = ($status == 0) ? 'unpublish' : 'publish' ;
+                Session::set('message', array('class' => 'success', 'content' => 'Update Successfully!', 'items' => $this->affectedRow() . ' module '. $statusMessage .' .'));
+            } else {
+                Session::set('message', array('class' => 'error', 'content' => 'Nothing Change, Please select any item!', 'items' => ''));
+            }
         }
     }
 
@@ -118,6 +127,23 @@ class GroupModel extends Model{
                 $ids   = $this->createWhereDeleteSQL($arrParams['cid']);
                 echo $query = "DELETE FROM `$this->_table` WHERE `id` IN ($ids)";
                 $this->query($query);  
+                Session::set('message', array('class' => 'success', 'content' => 'Update Successfully!', 'items' => $this->affectedRow() . ' module deleted.'));
+            } else {
+                Session::set('message', array('class' => 'error', 'content' => 'Nothing Change, Please select any item!', 'items' => ''));
+            }
+        }
+    }
+
+    public function ordering($arrParams, $options = null){
+        if ($options == null) {
+            if (!empty($arrParams['order'])) {
+                $i = 0;
+                foreach ($arrParams['order'] as $id => $ordering) {
+                    $i++;
+                    $query = "UPDATE `$this->_table` SET `ordering` = $ordering WHERE `id` = $id";    
+                    $this->query($query);                
+                }
+                Session::set('message', array('class' => 'success', 'content' => 'Update Successfully!', 'items' => ''));
             }
         }
     }

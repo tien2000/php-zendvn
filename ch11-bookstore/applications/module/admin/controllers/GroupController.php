@@ -9,6 +9,7 @@ class GroupController extends Controller{
         $this->_templateObj->load();
     }
 
+    // ACTION: LIST GROUP
     public function indexAction(){
         $this->_view->_title = 'Users: Groups';        
 
@@ -22,28 +23,39 @@ class GroupController extends Controller{
         $this->_view->render('group/index');        
     }
 
+    // ACTION: ADD GROUP
     public function addAction(){
         $this->_view->_title = 'Users: Groups: Add';
         $this->_view->render('group/add');
     }
 
+    // ACTION: AJAX STATUS (*)
     public function ajaxStatusAction(){
         $result = $this->_model->changeStatus($this->_arrParams, array('task' => 'ajax-change-status'));
         echo json_encode($result);
     }
 
+    // ACTION: AJAX GROUP ACP (*)
     public function ajaxGroupACPAction(){
         $result = $this->_model->changeStatus($this->_arrParams, array('task' => 'ajax-change-group-acp'));
         echo json_encode($result);
     }
 
+    // ACTION: STATUS (*)
     public function statusAction(){
         $result = $this->_model->changeStatus($this->_arrParams, array('task' => 'change-status'));
         URL::redirect(URL::createLink('admin', 'group', 'index'));
     }
 
+    // ACTION: TRASH (*)
     public function trashAction(){
         $result = $this->_model->deleteItems($this->_arrParams);
+        URL::redirect(URL::createLink('admin', 'group', 'index'));
+    }
+
+    // ACTION: ORDERING (*)
+    public function orderingAction(){
+        $result = $this->_model->ordering($this->_arrParams);
         URL::redirect(URL::createLink('admin', 'group', 'index'));
     }
 }

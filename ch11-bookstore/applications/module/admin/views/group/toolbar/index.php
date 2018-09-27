@@ -11,6 +11,10 @@
     $linkUnpublish  = URL::createLink('admin', 'group', 'status', array('type' => 0));
     $btnUnpublish   = Helper::cmsButton('unpublish', 'toolbar-unpublish', 'icon-unpublish', 'button-unpublish', $linkUnpublish, 'submit');
 
+    // Ordering
+    $linkOrdering   = URL::createLink('admin', 'group', 'ordering');
+    $btnOrdering    = Helper::cmsButton('ordering', 'toolbar-checkin', 'icon-checkin', 'button-checkin', $linkOrdering, 'submit');
+
     // Trash
     $linkTrash      = URL::createLink('admin', 'group', 'trash');
     $btnTrash       = Helper::cmsButton('trash', 'toolbar-trash', 'icon-trash', 'button-trash', $linkTrash, 'submit');
@@ -33,7 +37,7 @@
 
     switch ($this->_arrParams['action']) {
         case 'index':
-            $strBtn = $btnNew . $btnPublish . $btnUnpublish . $btnTrash;
+            $strBtn = $btnNew . $btnPublish . $btnUnpublish . $btnOrdering . $btnTrash;
             break;
 
         case 'add':
@@ -41,9 +45,11 @@
             break;
         
         default:
-            $strBtn = $btnNew . $btnPublish . $btnUnpublish . $btnTrash;
+            $strBtn = $btnNew . $btnPublish . $btnUnpublish . $btnOrdering . $btnTrash;
             break;
     }
+
+    
 ?>
 
 <!-- Subheader -->

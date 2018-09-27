@@ -18,6 +18,14 @@
     $lblId          = Helper::cmsLinkSort('Id', 'id', $columnPost, $orderPost);  
 ?>
 
+<?php 
+    // SESSION
+    $message        = Session::get('message');
+    Session::delete('message');
+    $strMessage     = Helper::cmsMessage($message);
+    
+?>
+
 <!-- container-fluid -->
 <div class="container-fluid container-main" style="top: 82px;">
     <section id="content">
@@ -25,6 +33,7 @@
         <div class="row-fluid">
             <div class="span12">
                 <div id="system-message-container">
+                    <?php echo $strMessage; ?>
                 </div>
                 <form action="#" method="post" name="adminForm" id="adminForm">
                     <div id="j-main-container">
@@ -76,7 +85,9 @@
                                     </th>
                                 </tr>
                             </thead>
+                            <!-- Start PAGINATION -->
                             <?php include_once "pagination.php"; ?>
+                            <!-- End PAGINATION -->
                             <tbody>
                                 <?php 
                                     if (!empty($this->Items)) {
@@ -86,7 +97,7 @@
                                             $name           = $value['name'];   
                                             $row            = ($i % 2 == 0) ? 'row0' : 'row1' ;
                                             $ckb            = '<input type="checkbox" name="cid[]" value="'. $id .'">';
-                                            $ordering       = '<input style="width: 30%; text-align: center; margin-bottom: auto;" type="text" value="'. $value['ordering'] .'"/>';                                            
+                                            $ordering       = '<input style="width: 30%; text-align: center; margin-bottom: auto;" type="text" name="order['. $id .']" value="'. $value['ordering'] .'"/>';                                            
                                             $created_by     = $value['created_by'];                                            
                                             $modified_by    = $value['modified_by'];
                                             $created        = Helper::dateFormat('d-m-Y', $value['created']);

@@ -5,6 +5,7 @@
         require_once LIBS_PATH . "{$className}.php";
     }
 
+    Session::init();
     $bootstrap = new Bootstrap();
     $bootstrap->init();
 ?>

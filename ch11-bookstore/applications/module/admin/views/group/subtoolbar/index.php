@@ -1,6 +1,6 @@
 <?php
     // SELECTBOX : Search Tools
-    $arrStatus        = array(3 => '- Select Status -', 1 => 'Publish', 0 => 'Unpublish', 2 => 'All');
+    $arrStatus        = array('default' => '- Select Status -', 'publish' => 'Publish', 'unpublish' => 'Unpublish');
     @$selectBoxStatus = Helper::cmsSelectBox('status', $arrStatus, $this->_arrParams['filter']['status']);
 ?>
 
