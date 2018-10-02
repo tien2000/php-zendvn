@@ -1,5 +1,5 @@
 <?php 
-class Helper{
+    class Helper{
     // Create Button
     public static function cmsButton($name, $id, $icon, $btnClass, $link = '', $type = 'new'){
         $xhtml = '<div class="btn-wrapper" id="'. $id .'">';
@@ -63,17 +63,16 @@ class Helper{
     }
 
     // Create Select Box
-    public static function cmsSelectBox($id = 'default', $arrVal = array(), $keySelect = 0){
-        $xhtml = '<select id="filter_'. $id .'" name="filter['. $id .']" style="display: none;">'; 
+    public static function cmsSelectBox($id = '', $name = '', $arrVal = array(), $keySelect = 'default'){        
+        $xhtml = '<div class="js-stools-field-filter"><select id="'. $id .'" name="'.  $name .'" style="display: none;">'; 
         foreach ($arrVal as $key => $value) {
-            if ($key == $keySelect) {
-                // $xhtml .= '<option value="'. $key .'" selected="selected">'. $value .'</option>';
+            if ($key == $keySelect && is_numeric($keySelect)) {
                 $xhtml .= '<option value="'. $key .'" selected="selected">'. $value .'</option>';
             } else {
                 $xhtml .= '<option value="'. $key .'">'. $value .'</option>';
             }
         }                        
-        $xhtml .= '</select>';
+        $xhtml .= '</select></div>';
         return $xhtml;
     }
 
@@ -87,6 +86,33 @@ class Helper{
                             <div class="alert-message">'. $message['items'] .'</div>
                         </div>';
         }
+        return $xhtml;
+    }
+
+    // Create Input
+    public static function cmsInput($type = '', $name = '', $id = '', $value = '', $readonly = '', $class = '', $size = ''){
+        $boolReadOnly   = ($readonly == false) ? '' : "readonly='true'";
+        $strSize        = ($size     == null)  ? '' : "size='$size'";
+        $strClass       = ($class    == null)  ? '' : "class='$class'";
+        $xhtml = '<input type="'. $type .'" name="'. $name .'" id="'. $id .'" value="'. $value .'" '. $strClass .' '. $boolReadOnly .' '. $strSize .' />';
+        return $xhtml;
+    }
+
+    // Create Row
+        public static function cmsRowForm($lblId, $lblClass, $lblTitle, $lblDataContent, $require = false, $input){        
+        $span    = '';
+        if ($require == true) $span = '<span class="star">&#160;*</span>';
+        $xhtml   = '<div class="control-group">
+                        <div class="control-label">
+                            <label id="'. $lblId .'" for="'. $lblId .'" class="'. $lblClass .'" title="'. $lblTitle .'"
+                                data-content="'. $lblDataContent .'">
+                                '. $lblTitle . $span .'
+                            </label>
+                        </div>
+                        <div class="controls">
+                            '. $input .'
+                        </div>
+                    </div>';
         return $xhtml;
     }
 }

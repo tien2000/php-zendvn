@@ -22,8 +22,7 @@
     // SESSION
     $message        = Session::get('message');
     Session::delete('message');
-    $strMessage     = Helper::cmsMessage($message);
-    
+    $strMessage     = Helper::cmsMessage($message);    
 ?>
 
 <!-- container-fluid -->
@@ -90,9 +89,9 @@
                             <!-- End PAGINATION -->
                             <tbody>
                                 <?php 
-                                    if (!empty($this->Items)) {
+                                    if (!empty($this->items)) {
                                         $i = 0;
-                                        foreach ($this->Items as $value) {
+                                        foreach ($this->items as $value) {
                                             $id             = $value['id'];                                            
                                             $name           = $value['name'];   
                                             $row            = ($i % 2 == 0) ? 'row0' : 'row1' ;
@@ -104,6 +103,7 @@
                                             $modified       = Helper::dateFormat('d-m-Y', $value['modified']);                                            
                                             $status         = Helper::cmsStatus($value['status'],      URL::createLink('admin', 'group', 'ajaxStatus', array('id' => $id, 'status' => $value['status'])), $id);
                                             $group_acp      = Helper::cmsGroupACP($value['group_acp'], URL::createLink('admin', 'group', 'ajaxGroupACP', array('id' => $id, 'group_acp' => $value['group_acp'])), $id);
+                                            $linkEdit      = URL::createLink('admin', 'group', 'form', array('id' => $id));
                                             
                                 ?>
                                 <tr class="<?php echo $row; ?>" sortable-group-id="position-<?php echo $id; ?>">
@@ -130,7 +130,7 @@
                                             </ul>
                                         </div>
                                     </td>
-                                    <td> <a href="#">
+                                    <td> <a href="<?php echo $linkEdit; ?>">
                                             <?php echo $name; ?></a></td>
                                     <td class="small hidden-phone">
                                         <?php echo $group_acp; ?> </span></td>

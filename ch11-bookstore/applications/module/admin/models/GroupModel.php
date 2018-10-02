@@ -1,5 +1,7 @@
 <?php 
-class GroupModel extends Model{
+    class GroupModel extends Model{    
+    private $_columns = array('id', 'name', 'group_acp', 'created', 'created_by', 'modified', 'modified_by', 'status', 'ordering');
+    
     public function __construct() {
         parent::__construct();
         $this->setTable(TBL_GROUP);
@@ -19,13 +21,24 @@ class GroupModel extends Model{
 
         // FILTER: STATUS
         if (isset($arrParams['filter']['status']) && $arrParams['filter']['status'] != 'default') {
-            $status = ($arrParams['filter']['status'] == 'unpublish') ? 0 : 1 ;
+            // $status = ($arrParams['filter']['status'] == 'unpublish') ? 0 : 1 ;
             if ($flagWhere == true) {
-                $query[]    = "AND `status` = '". $status ."'";
+                $query[]    = "AND `status` = '". $arrParams['filter']['status'] ."'";
             } else {
-                $query[]    = "WHERE `status` = '". $status ."'";
+                $query[]    = "WHERE `status` = '". $arrParams['filter']['status'] ."'";
+                $flagWhere  = true;
             }
-        }      
+        }              
+
+        // FILTER: GROUP ACP
+        if (isset($arrParams['filter']['group-acp']) && $arrParams['filter']['group-acp'] != 'default') {
+            // $status = ($arrParams['filter']['status'] == 'unpublish') ? 0 : 1 ;
+            if ($flagWhere == true) {
+                $query[]    = "AND `group_acp` = '". $arrParams['filter']['group-acp'] ."'";
+            } else {
+                $query[]    = "WHERE `group_acp` = '". $arrParams['filter']['group-acp'] ."'";
+            }            
+        }
 
         $query = implode(" ", $query);
         $result = $this->singleRecord($query);
@@ -46,11 +59,22 @@ class GroupModel extends Model{
 
         // FILTER: STATUS
         if (isset($arrParams['filter']['status']) && $arrParams['filter']['status'] != 'default') {
-            $status = ($arrParams['filter']['status'] == 'unpublish') ? 0 : 1 ;
+            // $status = ($arrParams['filter']['status'] == 'unpublish') ? 0 : 1 ;
             if ($flagWhere == true) {
-                $query[]    = "AND `status` = '". $status ."'";
+                $query[]    = "AND `status` = '". $arrParams['filter']['status'] ."'";
             } else {
-                $query[]    = "WHERE `status` = '". $status ."'";
+                $query[]    = "WHERE `status` = '". $arrParams['filter']['status'] ."'";
+                $flagWhere  = true;
+            }            
+        }
+
+        // FILTER: GROUP ACP
+        if (isset($arrParams['filter']['group-acp']) && $arrParams['filter']['group-acp'] != 'default') {
+            // $status = ($arrParams['filter']['status'] == 'unpublish') ? 0 : 1 ;
+            if ($flagWhere == true) {
+                $query[]    = "AND `group_acp` = '". $arrParams['filter']['group-acp'] ."'";
+            } else {
+                $query[]    = "WHERE `group_acp` = '". $arrParams['filter']['group-acp'] ."'";
             }            
         }
 
@@ -88,7 +112,6 @@ class GroupModel extends Model{
                             'status'    => $status,
                             'link'      => URL::createLink('admin', 'group', 'ajaxStatus', array('id' => $id, 'status' => $status))
                         );
-            Session::set('message', array('class' => 'success', 'content' => 'Update Successfully!', 'items' => ''));
             return $result;
         }
 
@@ -103,7 +126,6 @@ class GroupModel extends Model{
                                 'group_acp'     => $group_acp,
                                 'link'          => URL::createLink('admin', 'group', 'ajaxGroupACP', array('id' => $id, 'group_acp' => $group_acp))
                             );
-            Session::set('message', array('class' => 'success', 'content' => 'Update Successfully!', 'items' => ''));
             return $result;
         }
 
@@ -131,6 +153,38 @@ class GroupModel extends Model{
             } else {
                 Session::set('message', array('class' => 'error', 'content' => 'Nothing Change, Please select any item!', 'items' => ''));
             }
+        }
+    }
+
+    public function infoItem($arrParams, $options = null){
+        if ($options == null) {
+            $query[] = "SELECT `id`, `name`, `group_acp`, `status`, `ordering`";
+            $query[] = "FROM `$this->_table`";
+            $query[] = "WHERE `id` = '". $arrParams['id'] ."'";
+
+            $query   = implode(" ", $query);
+            $result  = $this->singleRecord($query);
+            return $result;
+        }
+    }
+
+    public function saveItems($arrParams, $options = null){
+        if ($options['task'] == 'add') {
+            $arrParams['form']['created'] = date('Y-m-d', time());
+            $arrParams['form']['created_by'] = 1;
+            $data = array_intersect_key($arrParams['form'], array_flip($this->_columns));
+            $this->insert($data);
+            Session::set('message', array('class' => 'success', 'content' => 'Successfully!', 'items' => $this->affectedRow() . ' module added.'));
+            return $this->lastID();
+        }
+
+        if ($options['task'] == 'edit') {
+            $arrParams['form']['modified'] = date('Y-m-d', time());
+            $arrParams['form']['modified_by'] = 1;
+            $data = array_intersect_key($arrParams['form'], array_flip($this->_columns));
+            $this->update($data, array(array('id', $arrParams['form']['id'])));
+            Session::set('message', array('class' => 'success', 'content' => 'Successfully!', 'items' => $this->affectedRow() . ' module added.'));
+            return $arrParams['form']['id'];
         }
     }
 

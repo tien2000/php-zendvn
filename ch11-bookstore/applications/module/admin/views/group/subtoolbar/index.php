@@ -1,7 +1,10 @@
 <?php
     // SELECTBOX : Search Tools
-    $arrStatus        = array('default' => '- Select Status -', 'publish' => 'Publish', 'unpublish' => 'Unpublish');
-    @$selectBoxStatus = Helper::cmsSelectBox('status', $arrStatus, $this->_arrParams['filter']['status']);
+    $arrStatus        = array('default' => '- Select Status -', 1 => 'Publish', 0 => 'Unpublish');
+    @$selectBoxStatus = Helper::cmsSelectBox('filter-status', 'filter[status]', $arrStatus, $this->_arrParams['filter']['status']);
+
+    $arrGroupACP        = array('default' => '- Select Group ACP -', 1 => 'Yes', 0 => 'No');
+    @$selectGroupACP = Helper::cmsSelectBox('filter-group-acp', 'filter[group-acp]', $arrGroupACP, $this->_arrParams['filter']['group-acp']);
 ?>
 
 <div class="js-stools clearfix">
@@ -78,9 +81,7 @@
     </div>
     <!-- Filters div -->
     <div id="filter-select" class="js-stools-container-filters hidden-phone clearfix" style="">
-        <div class="js-stools-field-filter">
-            <?php echo $selectBoxStatus; ?>
-        </div>
+            <?php echo $selectBoxStatus . $selectGroupACP; ?>
     </div>
 </div>
 

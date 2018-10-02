@@ -30,6 +30,9 @@ function submitForm(url) {
     // console.log(url);
     $('#adminForm').attr('action', url);
     $('#adminForm').submit();
+
+    $('#groupForm').attr('action', url);
+    $('#groupForm').submit();
 }
 
 function sortList(column, order) {
@@ -61,7 +64,11 @@ jQuery(document).ready(function($) {
         $('#adminForm').submit();
     });
 
-    $("#filter-select select[id=filter_status]").change(function (e) {
+    $("#filter-select select[id=filter-status]").change(function (e) {
+        $('#adminForm').submit();
+    });
+
+    $("#filter-select select[id=filter-group-acp]").change(function (e) {
         $('#adminForm').submit();
     });
 });

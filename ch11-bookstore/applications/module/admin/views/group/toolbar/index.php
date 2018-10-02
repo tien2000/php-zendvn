@@ -1,6 +1,6 @@
 <?php 
     // New
-    $linkNew        = URL::createLink('admin', 'group', 'add');
+    $linkNew        = URL::createLink('admin', 'group', 'form');
     $btnNew         = Helper::cmsButton('new', 'toolbar-new', 'icon-plus icon-white', 'btn-success', $linkNew, 'new');
 
     // Publish
@@ -20,19 +20,19 @@
     $btnTrash       = Helper::cmsButton('trash', 'toolbar-trash', 'icon-trash', 'button-trash', $linkTrash, 'submit');
 
     // Apply
-    $linkApply      = URL::createLink('admin', 'group', 'apply');
-    $btnApply       = Helper::cmsButton('save', 'toolbar-apply', 'icon-apply icon-white', 'btn-success', $linkApply);
+    $linkApply      = URL::createLink('admin', 'group', 'form', array('type' => 'apply'));
+    $btnApply       = Helper::cmsButton('save', 'toolbar-apply', 'icon-apply icon-white', 'btn-success', $linkApply, 'submit');
 
     // Save&Closed
-    $linkSaveClosed = URL::createLink('admin', 'group', 'save-closed');
-    $btnSaveClosed  = Helper::cmsButton('save & Closed', 'toolbar-save', 'icon-save', 'button-save', $linkSaveClosed);
+    $linkSaveClosed = URL::createLink('admin', 'group', 'form', array('type' => 'save-closed'));
+    $btnSaveClosed  = Helper::cmsButton('save & Closed', 'toolbar-save', 'icon-save', 'button-save', $linkSaveClosed, 'submit');
 
     // Save&New
-    $linkSaveNew    = URL::createLink('admin', 'group', 'save-new');
-    $btnSaveNew     = Helper::cmsButton('save & New', 'toolbar-save-new', 'icon-save-new', 'button-save-new', $linkSaveNew);
+    $linkSaveNew    = URL::createLink('admin', 'group', 'form', array('type' => 'save-new'));
+    $btnSaveNew     = Helper::cmsButton('save & New', 'toolbar-save-new', 'icon-save-new', 'button-save-new', $linkSaveNew, 'submit');
 
     // Cancel
-    $linkCancel     = URL::createLink('admin', 'group', 'cancel');
+    $linkCancel     = URL::createLink('admin', 'group', 'index');
     $btnCancel      = Helper::cmsButton('cancel', 'toolbar-cancel', 'icon-cancel', 'button-cancel', $linkCancel);
 
     switch ($this->_arrParams['action']) {
@@ -40,7 +40,7 @@
             $strBtn = $btnNew . $btnPublish . $btnUnpublish . $btnOrdering . $btnTrash;
             break;
 
-        case 'add':
+        case 'form':
             $strBtn = $btnApply . $btnSaveClosed . $btnSaveNew . $btnCancel;
             break;
         

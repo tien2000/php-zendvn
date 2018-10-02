@@ -18,15 +18,43 @@ class GroupController extends Controller{
         $this->setPagination($configPagination);
         $totalItems              = $this->_model->countItems($this->_arrParams, null);        
         $this->_view->pagination = new Pagination($totalItems, $this->_pagination);
-        $this->_view->Items      =  $this->_model->listItems($this->_arrParams, null);
+        $this->_view->items      =  $this->_model->listItems($this->_arrParams, null);
         
         $this->_view->render('group/index');        
     }
 
-    // ACTION: ADD GROUP
-    public function addAction(){
-        $this->_view->_title = 'Users: Groups: Add';
-        $this->_view->render('group/add');
+    // ACTION: FORM: ADD & EDIT GROUP
+    public function formAction(){
+        $this->_view->_title = 'Users: New Group';
+
+        if (isset($this->_arrParams['id'])) {
+            $this->_view->_title = 'Users: Edit Group';
+            $this->_arrParams['form'] = $this->_model->infoItem($this->_arrParams);       
+            if(empty($this->_arrParams['form'])) URL::redirect(URL::createLink('admin', 'group', 'index'));
+        }
+
+        if (@$this->_arrParams['form']['token'] > 0) {
+            $validate = new Validate($this->_arrParams['form']);
+            $validate->addRule('name',      'string', array('min'  => 3, 'max' => 255))
+                     ->addRule('ordering',  'int',    array('min'  => 0, 'max' => 100))
+                     ->addRule('status',    'status', array('deny' => array('default')))
+                     ->addRule('group_acp', 'status', array('deny' => array('default')));
+            $validate->run();
+            $this->_arrParams['form'] = $validate->getResult();
+            if ($validate->isValid() == false) {
+                $this->_view->errors = $validate->showErrors();
+            } else {
+                $task = (isset($this->_arrParams['form']['id'])) ? 'edit' : 'add';
+                $id = $this->_model->saveItems($this->_arrParams, array('task' => $task));
+                $type = $this->_arrParams['type'];
+                if ($type == 'save-closed') URL::redirect(URL::createLink('admin', 'group', 'index'));
+                if ($type == 'save-new')    URL::redirect(URL::createLink('admin', 'group', 'form'));
+                if ($type == 'apply')       URL::redirect(URL::createLink('admin', 'group', 'form', array('id' => $id)));
+            }
+        }
+
+        $this->_view->arrParam = $this->_arrParams;
+        $this->_view->render('group/form');
     }
 
     // ACTION: AJAX STATUS (*)
