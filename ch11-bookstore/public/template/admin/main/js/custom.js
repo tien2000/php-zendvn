@@ -71,4 +71,8 @@ jQuery(document).ready(function($) {
     $("#filter-select select[id=filter-group-acp]").change(function (e) {
         $('#adminForm').submit();
     });
+
+    $("#filter-select select[id=filter-group-id]").change(function (e) {
+        $('#adminForm').submit();
+    });
 });

@@ -161,7 +161,7 @@
         }
         
         // LIST RECORD
-        public function listRecord($query){
+        public function fetchAll($query){
             $result = array();
             if (!empty($query)) {
                 $resultQuery = $this->query($query);
@@ -176,29 +176,22 @@
         }
 
         // LIST SELECTBOX
-        public function createSelectbox($query = '', $selectBoxName = '', $keySelected = null, $class = null){            
-            $xhtml = '';
+        public function fetchPairs($query = ''){
+            $result = array();
             if(!empty($query)){
                 $resultQuery = $this->query($query);
                 if(mysqli_num_rows($resultQuery) > 0){
-                    $xhtml = '<select class="'.$class.'" name="'.$selectBoxName.'">';
-                    $xhtml .= '<option value="selectGroup">-- Select Group --</option>';
                     while($row = mysqli_fetch_assoc($resultQuery)){
-                        if ($keySelected == $row['id'] && $keySelected != null) {
-                            $xhtml .= '<option selected="selected" value="'. $row['id'] .'">'. $row['name'] .'</option>';
-                        } else {
-                            $xhtml .= '<option value="'. $row['id'] .'">'. $row['name'] .'</option>';
-                        }
+                        $result[$row['id']] = $row['name'];
                     }
-                    $xhtml .= '</select>';
                     mysqli_free_result($resultQuery);
                 }
-            }            
-            return $xhtml;
+            }
+            return $result;
         }
 
         // SINGLE RECORD
-        public function singleRecord($query){
+        public function fetchRow($query){
             $result = array();
             if (!empty($query)) {
                 $resultQuery = $this->query($query);

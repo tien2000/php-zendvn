@@ -11,7 +11,7 @@ class GroupController extends Controller{
 
     // ACTION: LIST GROUP
     public function indexAction(){
-        $this->_view->_title = 'Users: Groups';        
+        $this->_view->_title = 'Users Groups: List';
 
         // Pagination
         $configPagination = array('totalItemsPerPage' => 5, 'pageRange' => 3);

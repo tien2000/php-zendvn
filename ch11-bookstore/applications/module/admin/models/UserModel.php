@@ -1,10 +1,10 @@
 <?php 
-    class GroupModel extends Model{    
-    private $_columns = array('id', 'name', 'group_acp', 'created', 'created_by', 'modified', 'modified_by', 'status', 'ordering');
+    class UserModel extends Model{    
+    private $_columns = array('id', 'username', 'email', 'fullname', 'created', 'created_by', 'modified', 'modified_by', 'status', 'ordering', 'group_id');
     
     public function __construct() {
         parent::__construct();
-        $this->setTable(TBL_GROUP);
+        $this->setTable(TBL_USER);
     }
 
     public function countItems($arrParams, $options = null){
@@ -14,18 +14,23 @@
         
         // FILTER: KEYWORD
         if (!empty($arrParams['filter']['search'])) {
-            $keyword    = "%" . $arrParams['filter']['search'] . "%";
-            $query[]    = "AND `name` LIKE '". $keyword ."'";
+            $keyword = "%" . $arrParams['filter']['search'] . "%";
+            $query[]    = "AND (`username` LIKE '$keyword' OR `email` LIKE '$keyword')";
         }
 
         // FILTER: STATUS
         if (isset($arrParams['filter']['status']) && $arrParams['filter']['status'] != 'default') {
             $query[]    = "AND `status` = '". $arrParams['filter']['status'] ."'";
-        }              
+        }     
+        
+        // FILTER: GROUP ID
+        if (isset($arrParams['filter']['group-id']) && $arrParams['filter']['group-id'] != 'default') {
+            $query[]    = "AND `group_id` = '". $arrParams['filter']['group-id'] ."'";
+        }     
 
         // FILTER: GROUP ACP
         if (isset($arrParams['filter']['group-acp']) && $arrParams['filter']['group-acp'] != 'default') {
-            $query[]    = "AND `group_acp` = '". $arrParams['filter']['group-acp'] ."'";   
+            $query[]    = "AND `group_acp` = '". $arrParams['filter']['group-acp'] ."'";          
         }
 
         $query = implode(" ", $query);
@@ -34,34 +39,33 @@
     }
 
     public function listItems($arrParams, $options = null){
-        $flagWhere      = false;
-        $query[]        = "SELECT `id`, `name`, `group_acp`, `created`, `created_by`, `modified`, `modified_by`, `status`, `ordering`";
-        $query[]        = "FROM `$this->_table`";
-        $query[]        = "WHERE `id` > 0";
+        $query[]        = "SELECT u.`id`, u.`username`, u.`email`, u.`fullname`, u.`created`, u.`created_by`, u.`modified`, u.`modified_by`, u.`status`, u.`ordering`, g.`name` AS `group_name`";
+        $query[]        = "FROM `$this->_table` AS `u`, `" . TBL_GROUP . "` AS `g`";
+        $query[]        = "WHERE u.group_id = g.id ";
         
         // FILTER: KEYWORD
         if (!empty($arrParams['filter']['search'])) {
-            $keyword = "%" . $arrParams['filter']['search'] . "%";
-            $query[]    = "AND `name` LIKE '". $keyword ."'";
+            $keyword    = "%" . $arrParams['filter']['search'] . "%";
+            $query[]    = "AND (`username` LIKE '$keyword' OR `email` LIKE '$keyword')";
         }
 
         // FILTER: STATUS
         if (isset($arrParams['filter']['status']) && $arrParams['filter']['status'] != 'default') {
-            $query[]    = "AND `status` = '". $arrParams['filter']['status'] ."'";         
+            $query[]    = "AND u.`status` = '". $arrParams['filter']['status'] ."'";
         }
 
-        // FILTER: GROUP ACP
-        if (isset($arrParams['filter']['group-acp']) && $arrParams['filter']['group-acp'] != 'default') {
-            $query[]    = "AND `group_acp` = '". $arrParams['filter']['group-acp'] ."'";   
+        // FILTER: GROUP ID
+        if (isset($arrParams['filter']['group-id']) && $arrParams['filter']['group-id'] != 'default') {
+            $query[]    = "AND u.`group_id` = '". $arrParams['filter']['group-id'] ."'";
         }
 
         // SORT
         if (!empty(@$arrParams['filter_column']) && !empty(@$arrParams['filter_column_dir'])) {
             $column     = $arrParams['filter_column'];
             $columnDir  = $arrParams['filter_column_dir'];
-            $query[]    = "ORDER BY `$column` $columnDir";
+            $query[]    = "ORDER BY u.`$column` $columnDir";
         } else {
-            $query[]    = "ORDER BY `name` ASC";
+            $query[]    = "ORDER BY `id` ASC";
         }        
 
         // PAGINATION
@@ -87,22 +91,8 @@
             $result = array(
                             'id'        => $id,
                             'status'    => $status,
-                            'link'      => URL::createLink('admin', 'group', 'ajaxStatus', array('id' => $id, 'status' => $status))
+                            'link'      => URL::createLink('admin', 'user', 'ajaxStatus', array('id' => $id, 'status' => $status))
                         );
-            return $result;
-        }
-
-        if ($options['task'] == 'ajax-change-group-acp') {
-            $group_acp = ($arrParams['group_acp'] == 0) ? 1 : 0 ;
-            $id = $arrParams['id'];
-            $query = "UPDATE `$this->_table` SET `group_acp` = $group_acp WHERE `id` = $id";
-            $this->query($query);
-
-            $result = array(
-                                'id'            => $id,
-                                'group_acp'     => $group_acp,
-                                'link'          => URL::createLink('admin', 'group', 'ajaxGroupACP', array('id' => $id, 'group_acp' => $group_acp))
-                            );
             return $result;
         }
 
@@ -177,6 +167,16 @@
                 Session::set('message', array('class' => 'success', 'content' => 'Update Successfully!', 'items' => ''));
             }
         }
+    }    
+
+    public function itemsInSelectBox($arrParams, $options = null){
+        if ($options == null) {
+            $query = "SELECT `id`, `name` FROM `". TBL_GROUP ."`";            
+            $result = $this->fetchPairs($query);
+            $result['default'] = '- Select Group -';
+            ksort($result);
+        }
+        return $result;
     }
 }
 ?>
