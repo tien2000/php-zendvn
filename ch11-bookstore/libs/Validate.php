@@ -51,7 +51,7 @@ class Validate{
                         $this->validateUrl($elemt, $value['options']['min'], $value['options']['max']);
                         break;
                     case 'email':              
-                        $this->validateEmail($elemt, $value['options']['min'], $value['options']['max']);
+                        $this->validateEmail($elemt);
                         break;
                     case 'password':              
                         $this->validatePassword($elemt, $value['options']);
@@ -67,6 +67,15 @@ class Validate{
                         break;
                     case 'existRecord':         
                         $this->validateExistRecord($elemt, $value['options']);
+                    case 'notExistRecord':         
+                        $this->validateNotExistRecord($elemt, $value['options']);
+                    case 'string-notExistRecord':     
+                        $this->validateNotExistRecord($elemt, $value['options']);    
+                        $this->validateString($elemt, $value['options']['min'], $value['options']['max']);
+                        break;
+                    case 'email-notExistRecord':
+                        $this->validateNotExistRecord($elemt, $value['options']);    
+                        $this->validateEmail($elemt);
                         break;
                 }
             }            
@@ -92,7 +101,7 @@ class Validate{
         } else if ($length > $max) {
             $this->setError($elemt, ' too long');
         } else if(!is_string($this->_source[$elemt])){
-            $this->setError($elemt, ' too not a String');
+            $this->setError($elemt, ' is not a String');
         }        
     }
 
@@ -151,6 +160,14 @@ class Validate{
         $query  = $options['query'];
         if ($db->isExist($query) == false) {
             $this->setError($elemt, 'Record is not exist');
+        }
+    }
+
+    public function validateNotExistRecord($elemt, $options){
+        $db     = $options['database'];
+        $query  = $options['query'];
+        if ($db->isExist($query) == true) {
+            $this->setError($elemt, 'Record is Exist');
         }
     }
 

@@ -1,6 +1,6 @@
 <!-- Toolbar -->
 <?php 
-    include_once "toolbar/index.php";
+    include_once MODULE_PATH . "admin/views/toolbar.php";
 ?>
 
 <!-- Sort -->
@@ -66,19 +66,19 @@
                                     <th width="10%" class="title">
                                         <?php echo $lblEmail; ?>
                                     </th>
-                                    <th width="20%" class="nowrap hidden-phone hidden-tablet">
+                                    <th width="15%" class="nowrap hidden-phone hidden-tablet">
                                         <?php echo $lblFullname; ?>
                                     </th>
-                                    <th width="10%" class="nowrap hidden-phone hidden-tablet">
+                                    <th width="5%" class="nowrap hidden-phone hidden-tablet">
                                         <?php echo $lblCreated; ?>
                                     </th>
-                                    <th width="10%" class="nowrap hidden-phone hidden-tablet">
+                                    <th width="5%" class="nowrap hidden-phone hidden-tablet">
                                         <?php echo $lblCreatedBy; ?>
                                     </th>
-                                    <th width="10%" class="nowrap hidden-phone">
+                                    <th width="5%" class="nowrap hidden-phone">
                                         <?php echo $lblModified; ?>
                                     </th>
-                                    <th width="10%" class="nowrap hidden-phone">
+                                    <th width="5%" class="nowrap hidden-phone">
                                         <?php echo $lblModifiedBy; ?>
                                     </th>
                                     <th width="5%" class="nowrap hidden-phone">
@@ -87,7 +87,7 @@
                                     <th width="1%" class="nowrap center hidden-phone">
                                         <?php echo $lblId; ?>
                                     </th>
-                                    <th width="10%" class="nowrap center hidden-phone">
+                                    <th width="5%" class="nowrap center hidden-phone">
                                         <?php echo $lblGroupName; ?>
                                     </th>
                                 </tr>
@@ -176,7 +176,7 @@
                         <div>
                             <input type="hidden" name="filter_column" value="username">
                             <input type="hidden" name="filter_page" value="1">
-                            <input type="hidden" name="filter_column_dir" value="asc">
+                            <input type="hidden" name="filter_column_dir" value="desc">
                         </div>
                 </form>
             </div>

@@ -1,6 +1,6 @@
 <!-- Toolbar -->
 <?php 
-    include_once "toolbar/index.php";
+    include_once MODULE_PATH . "admin/views/toolbar.php";
 ?>
 
 <!-- Sort -->

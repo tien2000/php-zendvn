@@ -1,5 +1,5 @@
 <?php 
-    include_once "toolbar/index.php";
+    include_once MODULE_PATH . "admin/views/toolbar.php";
 
     @$dataForm = $this->arrParam['form'];
     

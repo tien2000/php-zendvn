@@ -1,6 +1,6 @@
 <?php 
     class UserModel extends Model{    
-    private $_columns = array('id', 'username', 'email', 'fullname', 'created', 'created_by', 'modified', 'modified_by', 'status', 'ordering', 'group_id');
+    private $_columns = array('id', 'username', 'email', 'fullname', 'password', 'created', 'created_by', 'modified', 'modified_by', 'status', 'ordering', 'group_id');
     
     public function __construct() {
         parent::__construct();
@@ -125,7 +125,7 @@
 
     public function infoItem($arrParams, $options = null){
         if ($options == null) {
-            $query[] = "SELECT `id`, `name`, `group_acp`, `status`, `ordering`";
+            $query[] = "SELECT `id`, `username`, `email`, `fullname`, `group_id`, `status`, `ordering`";
             $query[] = "FROM `$this->_table`";
             $query[] = "WHERE `id` = '". $arrParams['id'] ."'";
 
@@ -139,6 +139,7 @@
         if ($options['task'] == 'add') {
             $arrParams['form']['created'] = date('Y-m-d', time());
             $arrParams['form']['created_by'] = 1;
+            $arrParams['form']['password'] = md5($arrParams['form']['password']);
             $data = array_intersect_key($arrParams['form'], array_flip($this->_columns));
             $this->insert($data);
             Session::set('message', array('class' => 'success', 'content' => 'Successfully!', 'items' => $this->affectedRow() . ' module added.'));
@@ -148,6 +149,11 @@
         if ($options['task'] == 'edit') {
             $arrParams['form']['modified'] = date('Y-m-d', time());
             $arrParams['form']['modified_by'] = 1;
+            if ($arrParams['form']['password'] != null) {
+                $arrParams['form']['password'] = md5($arrParams['form']['password']);
+            } else {
+                unset($arrParams['form']['password']);
+            }
             $data = array_intersect_key($arrParams['form'], array_flip($this->_columns));
             $this->update($data, array(array('id', $arrParams['form']['id'])));
             Session::set('message', array('class' => 'success', 'content' => 'Successfully!', 'items' => $this->affectedRow() . ' module added.'));

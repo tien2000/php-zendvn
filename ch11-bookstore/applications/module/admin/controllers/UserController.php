@@ -26,7 +26,8 @@ class UserController extends Controller{
 
     // ACTION: FORM: ADD & EDIT USER
     public function formAction(){
-        $this->_view->_title = 'Users: New User';
+        $this->_view->_title     = 'Users: New User';
+        $this->_view->slbGroup   = $this->_model->itemsInSelectBox($this->_arrParams, null);        
 
         if (isset($this->_arrParams['id'])) {
             $this->_view->_title = 'Users: Edit User';
@@ -35,17 +36,30 @@ class UserController extends Controller{
         }
 
         if (@$this->_arrParams['form']['token'] > 0) {
-            $validate = new Validate($this->_arrParams['form']);
-            $validate->addRule('name',      'string', array('min'  => 3, 'max' => 255))
-                     ->addRule('ordering',  'int',    array('min'  => 0, 'max' => 100))
-                     ->addRule('status',    'status', array('deny' => array('default')))
-                     ->addRule('group_acp', 'status', array('deny' => array('default')));
+            $queryUsername = "SELECT `id` FROM `" . TBL_USER . "` WHERE `username` = '" . $this->_arrParams['form']['username'] . "'";
+            $queryEmail    = "SELECT `id` FROM `" . TBL_USER . "` WHERE `email` = '" . $this->_arrParams['form']['email'] . "'";
+            $task          = 'add';
+            $requiredPassword = true;
+
+            if (isset($this->_arrParams['form']['id'])) {
+                $task             = 'edit';
+                $requiredPassword = false;
+                $queryUsername   .= "AND `id` <> '" .$this->_arrParams['form']['id']. "'";
+                $queryEmail      .= "AND `id` <> '" .$this->_arrParams['form']['id']. "'";
+            }
+
+            $validate      = new Validate($this->_arrParams['form']);
+            $validate->addRule('username' , 'string-notExistRecord', array('min' => 3, 'max' => 255, 'database' => $this->_model, 'query' => $queryUsername))
+                     ->addRule('email'    , 'email-notExistRecord' , array('database' => $this->_model, 'query' => $queryEmail))
+                     ->addRule('password' , 'password', array('action'  => $task), $requiredPassword)
+                     ->addRule('ordering' , 'int'     , array('min'     => 0, 'max' => 100))
+                     ->addRule('status'   , 'status'  , array('deny'    => array('default')))
+                     ->addRule('group_id' , 'status'  , array('deny'    => array('default')));
             $validate->run();
             $this->_arrParams['form'] = $validate->getResult();
             if ($validate->isValid() == false) {
                 $this->_view->errors = $validate->showErrors();
-            } else {
-                $task = (isset($this->_arrParams['form']['id'])) ? 'edit' : 'add';
+            } else {                
                 $id = $this->_model->saveItems($this->_arrParams, array('task' => $task));
                 $type = $this->_arrParams['type'];
                 if ($type == 'save-closed') URL::redirect(URL::createLink('admin', 'user', 'index'));
@@ -53,7 +67,6 @@ class UserController extends Controller{
                 if ($type == 'apply')       URL::redirect(URL::createLink('admin', 'user', 'form', array('id' => $id)));
             }
         }
-
         $this->_view->arrParam = $this->_arrParams;
         $this->_view->render('user/form');
     }
