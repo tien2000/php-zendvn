@@ -98,7 +98,7 @@
         return $xhtml;
     }
 
-    // Create Row
+    // Create Row - Admin
         public static function cmsRowForm($lblId, $lblClass, $lblTitle, $lblDataContent, $require = false, $input){        
         $span    = '';
         if ($require == true) $span = '<span class="star">&#160;*</span>';
@@ -113,6 +113,22 @@
                             '. $input .'
                         </div>
                     </div>';
+        return $xhtml;
+    }
+
+    // Create Row - Public
+    public static function cmsRow($lblTitle, $input, $submit = false){  
+        if ($submit == false) {
+            $xhtml   = '<div class="form_row">
+                <label class="contact"><strong>'. $lblTitle .':</strong></label>
+                '. $input .'
+            </div>';    
+        } else {
+            $xhtml   = '<div class="form_row">
+                '. $input .'
+            </div>';  
+        }
+        
         return $xhtml;
     }
 }
