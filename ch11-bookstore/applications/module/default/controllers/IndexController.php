@@ -9,8 +9,8 @@ class IndexController extends Controller{
         $this->_templateObj->load();
     }
 
-    public function indexAction(){
-        echo "<h3>". __METHOD__ ."</h3>";
+    public function noticeAction(){
+        $this->_view->render('index/notice');
     }
 }
 ?>

@@ -12,9 +12,19 @@ class URL{
         return $url;
     }
 
-    public function redirect($link){
+    public static function redirect($module, $controller, $action, $params = null){
+        $link = self::createLink($module, $controller, $action, $params);
         header('location:' . $link);
         exit();
+    }
+
+    public static function checkRefeshPage($value, $module, $controller, $action, $params = null){
+        if (Session::get('token') == $value) {
+            Session::delete('token');
+            URL::redirect($module, $controller, $action);
+        } else {
+            Session::set('token', $value);
+        }
     }
 }
 ?>

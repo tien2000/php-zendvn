@@ -185,6 +185,18 @@ class Validate{
         return $xhtml;
     }
 
+    public function showErrorsPublic(){        
+        $xhtml = '';
+        if (!empty($this->_errors)) {
+            $xhtml .= '<ul class="error-public">';
+                foreach ($this->_errors as $key => $value) {
+                    $xhtml .= '<li>'. $value .'</li>';
+                }
+            $xhtml .= '</ul>';
+        }
+        return $xhtml;
+    }
+
     public function isValid(){
         return $result = (count($this->_errors) > 0) ? false : true;
     }    
