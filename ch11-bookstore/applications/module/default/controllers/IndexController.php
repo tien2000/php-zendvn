@@ -12,5 +12,9 @@ class IndexController extends Controller{
     public function noticeAction(){
         $this->_view->render('index/notice');
     }
+
+    public function indexAction(){
+        $this->_view->render('index/index');
+    }
 }
 ?>
