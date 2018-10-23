@@ -50,7 +50,7 @@
     // Create Title sort
     public static function cmsLinkSort($name, $column, $columnPost, $orderPost){
         $arrowUpDown = ($orderPost == 'asc') ? 'up' : 'down' ;
-        $order       = ($orderPost == 'asc') ? 'desc' : 'asc' ;
+        $order       = ($orderPost == 'desc') ? 'asc' : 'desc' ;
         $arrowSpan   = ''; 
         if ($column == $columnPost) {            
             $arrowSpan = '<span class="icon-arrow-'. $arrowUpDown .'-3"></span>';

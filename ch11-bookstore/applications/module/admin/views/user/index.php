@@ -176,7 +176,7 @@
                         <div>
                             <input type="hidden" name="filter_column" value="username">
                             <input type="hidden" name="filter_page" value="1">
-                            <input type="hidden" name="filter_column_dir" value="desc">
+                            <input type="hidden" name="filter_column_dir" value="DESC">
                         </div>
                 </form>
             </div>

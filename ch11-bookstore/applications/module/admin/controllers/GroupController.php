@@ -30,7 +30,7 @@ class GroupController extends Controller{
         if (isset($this->_arrParams['id'])) {
             $this->_view->_title = 'Users: Edit Group';
             $this->_arrParams['form'] = $this->_model->infoItem($this->_arrParams);       
-            if(empty($this->_arrParams['form'])) URL::redirect(URL::createLink('admin', 'group', 'index'));
+            if(empty($this->_arrParams['form'])) URL::redirect('admin', 'group', 'index');
         }
 
         if (@$this->_arrParams['form']['token'] > 0) {
@@ -47,9 +47,9 @@ class GroupController extends Controller{
                 $task = (isset($this->_arrParams['form']['id'])) ? 'edit' : 'add';
                 $id = $this->_model->saveItems($this->_arrParams, array('task' => $task));
                 $type = $this->_arrParams['type'];
-                if ($type == 'save-closed') URL::redirect(URL::createLink('admin', 'group', 'index'));
-                if ($type == 'save-new')    URL::redirect(URL::createLink('admin', 'group', 'form'));
-                if ($type == 'apply')       URL::redirect(URL::createLink('admin', 'group', 'form', array('id' => $id)));
+                if ($type == 'save-closed') URL::redirect('admin', 'group', 'index');
+                if ($type == 'save-new')    URL::redirect('admin', 'group', 'form');
+                if ($type == 'apply')       URL::redirect('admin', 'group', 'form', array('id' => $id));
             }
         }
 
@@ -72,19 +72,19 @@ class GroupController extends Controller{
     // ACTION: STATUS (*)
     public function statusAction(){
         $result = $this->_model->changeStatus($this->_arrParams, array('task' => 'change-status'));
-        URL::redirect(URL::createLink('admin', 'group', 'index'));
+        URL::redirect('admin', 'group', 'index');
     }
 
     // ACTION: TRASH (*)
     public function trashAction(){
         $result = $this->_model->deleteItems($this->_arrParams);
-        URL::redirect(URL::createLink('admin', 'group', 'index'));
+        URL::redirect('admin', 'group', 'index');
     }
 
     // ACTION: ORDERING (*)
     public function orderingAction(){
         $result = $this->_model->ordering($this->_arrParams);
-        URL::redirect(URL::createLink('admin', 'group', 'index'));
+        URL::redirect('admin', 'group', 'index');
     }
 }
 ?>
