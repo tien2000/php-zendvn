@@ -10,6 +10,8 @@ class Bootstrap{
         if (file_exists($filePath)) {
             $this->loadExistingController($filePath, $controllerName);
             $this->callMethod();
+        } else {
+            URL::redirect('default', 'index', 'notice', array('type' => 'not-url'));
         }
     }
 
@@ -20,10 +22,37 @@ class Bootstrap{
 
     private function callMethod(){
         $actionName = $this->_params['action'] . 'Action';
-        if (method_exists($this->_controllerObj, $actionName)) {
-            $this->_controllerObj->$actionName();
+
+        if (method_exists($this->_controllerObj, $actionName) == true) {
+            $module     = $this->_params['module'];
+            $controller = $this->_params['controller'];
+            $action     = $this->_params['action'];
+            $userInfo   = Session::get('user');
+            // Session::delete('user');
+
+            $logged     = ($userInfo['login'] == true && $userInfo['time'] + TIME_LOGIN >= time());
+
+            // MODULE ADMIN
+            if ($module == 'admin') {
+                if ($logged == true) {
+                    if ($userInfo['group_acp'] == 1) {
+                        $this->_controllerObj->$actionName();
+                    } else {
+                        URL::redirect('default', 'index', 'notice', array('type' => 'not-permision'));
+                    }                    
+                } else {
+                    Session::delete('user');
+                    require_once(MODULE_PATH . $module . DS . 'controllers' . DS . 'IndexController.php');
+                    $indexController = new IndexController($this->_params);
+                    $indexController->loginAction();
+                } 
+
+            // MODULE DEFAULT               
+            } else if ($module == 'default') {
+                $this->_controllerObj->$actionName();
+            }
         } else {
-            $this->_errors();
+            URL::redirect('default', 'index', 'notice', array('type' => 'not-url'));
         }
     }   
 

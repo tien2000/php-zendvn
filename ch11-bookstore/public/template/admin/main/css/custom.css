@@ -5,3 +5,8 @@
 .pagination [class^="icon-"], [class*=" icon-"]{
     line-height: 17px;
 }
+
+[class^="icon-"], [class*=" icon-"]{
+    height: 18px;
+    line-height: 18px;
+}

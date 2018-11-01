@@ -1,10 +1,10 @@
 <?php 
-    $imgURL = TEMPLATE_URL . "default/main/" . $this->_dirImg;
-    $linkHome = URL::createLink('default', 'index', 'index');
+    $imgURL         = TEMPLATE_URL . "default/main/" . $this->_dirImg;
+    $linkHome       = URL::createLink('default', 'index', 'index');
     $linkCategories = URL::createLink('default', 'categories', 'index');
-    $linkMyAccount = URL::createLink('default', 'user', 'index');
-    $linkRegister = URL::createLink('default', 'user', 'register');
-    $linkLogin = URL::createLink('default', 'user', 'login');
+    $linkMyAccount  = URL::createLink('default', 'user', 'index');
+    $linkRegister   = URL::createLink('default', 'user', 'register');
+    $linkLogin      = URL::createLink('default', 'user', 'login');
 ?>
 
 <div class="header">

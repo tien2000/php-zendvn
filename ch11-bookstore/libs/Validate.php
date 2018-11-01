@@ -67,8 +67,10 @@ class Validate{
                         break;
                     case 'existRecord':         
                         $this->validateExistRecord($elemt, $value['options']);
+                        break;
                     case 'notExistRecord':         
                         $this->validateNotExistRecord($elemt, $value['options']);
+                        break;
                     case 'string-notExistRecord':     
                         $this->validateNotExistRecord($elemt, $value['options']);    
                         $this->validateString($elemt, $value['options']['min'], $value['options']['max']);

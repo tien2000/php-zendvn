@@ -45,13 +45,15 @@
         case 'form':
             $strBtn = $btnApply . $btnSaveClosed . $btnSaveNew . $btnCancel;
             break;
+
+        case 'profile':
+            $strBtn = $btnApply . $btnSaveClosed . $btnCancel;
+            break;
         
         default:
             $strBtn = $btnNew . $btnPublish . $btnUnpublish . $btnOrdering . $btnTrash;
             break;
-    }
-
-    
+    }    
 ?>
 
 <!-- Subheader -->

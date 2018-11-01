@@ -146,9 +146,12 @@
     }
 
     public function saveItems($arrParams, $options = null){
+        $userObj  = Session::get('user');
+        $userInfo = $userObj['info'];
+
         if ($options['task'] == 'add') {
             $arrParams['form']['created'] = date('Y-m-d', time());
-            $arrParams['form']['created_by'] = 1;
+            $arrParams['form']['created_by'] = $userInfo['username'];
             $data = array_intersect_key($arrParams['form'], array_flip($this->_columns));
             $this->insert($data);
             Session::set('message', array('class' => 'success', 'content' => 'Successfully!', 'items' => $this->affectedRow() . ' module added.'));
@@ -157,7 +160,7 @@
 
         if ($options['task'] == 'edit') {
             $arrParams['form']['modified'] = date('Y-m-d', time());
-            $arrParams['form']['modified_by'] = 1;
+            $arrParams['form']['modified_by'] = $userInfo['username'];
             $data = array_intersect_key($arrParams['form'], array_flip($this->_columns));
             $this->update($data, array(array('id', $arrParams['form']['id'])));
             Session::set('message', array('class' => 'success', 'content' => 'Successfully!', 'items' => $this->affectedRow() . ' module added.'));

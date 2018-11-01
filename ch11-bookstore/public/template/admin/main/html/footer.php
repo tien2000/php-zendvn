@@ -1,3 +1,7 @@
+<?php 
+    $linkViewSite   = URL::createLink("default", "index", "index");
+?>
+
 <!-- Begin Status Module -->
 <div id="status" class="navbar navbar-fixed-bottom hidden-phone">
     <div class="btn-toolbar">
@@ -5,7 +9,7 @@
             <p>Joomla! 3.8.11 &nbsp;—&nbsp; © 2018 demo-joomla </p>
         </div>
         <div class="btn-group viewsite">
-            <a href="http://localhost/joomla/" target="_blank">
+            <a href="<?php echo $linkViewSite; ?>" target="_blank">
                 <span class="icon-out-2" aria-hidden="true"></span>View Site</a>
             <span class="btn-group separator"></span>
         </div>

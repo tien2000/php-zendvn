@@ -1,10 +1,12 @@
 <?php 
-    $linkControlPanel   = URL::createLink("admin", "control", "index");
+    $linkControlPanel   = URL::createLink("admin", "index", "index");
     $linkConfiguration  = URL::createLink("admin", "configuration", "index");
     $linkUserManager    = URL::createLink("admin", "user", "index");
-    $linkAddUser        = URL::createLink("admin", "user", "add");
+    $linkAddUser        = URL::createLink("admin", "user", "form");
     $linkGroupManager   = URL::createLink("admin", "group", "index");
-    $linkAddGroup       = URL::createLink("admin", "group", "add");
+    $linkAddGroup       = URL::createLink("admin", "group", "form");
+    $linkLogout         = URL::createLink("admin", "index", "logout");
+    $linkEditAccount    = URL::createLink("admin", "index", "profile");
 ?>
 
 <body class="admin com_modules view- layout- task- itemid-0" data-basepath="/joomla" cz-shortcut-listen="true">
@@ -92,11 +94,11 @@
                                 </li>
                                 <li class="divider"></li>
                                 <li>
-                                    <a href="index.php?option=com_admin&amp;task=profile.edit&amp;id=280">Edit Account</a>
+                                    <a href="<?php echo $linkEditAccount; ?>">Edit Account</a>
                                 </li>
                                 <li class="divider"></li>
                                 <li class="">
-                                    <a href="/joomla/administrator/index.php?option=com_login&amp;task=logout&amp;672f8d0f9c93314ebc379d01cc71b827=1">Logout</a>
+                                    <a href="<?php echo $linkLogout; ?>">Logout</a>
                                 </li>
                             </ul>
                         </li>
