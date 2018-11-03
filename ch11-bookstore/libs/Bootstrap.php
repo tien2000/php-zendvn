@@ -20,6 +20,13 @@ class Bootstrap{
         $this->_controllerObj = new $controllerName($this->_params);        
     }
 
+    private function callActionLogin($module = 'default'){
+        Session::delete('user');
+        require_once(MODULE_PATH . $module . DS . 'controllers' . DS . 'IndexController.php');
+        $indexController = new IndexController($this->_params);
+        $indexController->loginAction();
+    }
+
     private function callMethod(){
         $actionName = $this->_params['action'] . 'Action';
 
@@ -41,15 +48,21 @@ class Bootstrap{
                         URL::redirect('default', 'index', 'notice', array('type' => 'not-permision'));
                     }                    
                 } else {
-                    Session::delete('user');
-                    require_once(MODULE_PATH . $module . DS . 'controllers' . DS . 'IndexController.php');
-                    $indexController = new IndexController($this->_params);
-                    $indexController->loginAction();
+                    $this->callActionLogin($module);
                 } 
 
             // MODULE DEFAULT               
             } else if ($module == 'default') {
-                $this->_controllerObj->$actionName();
+                if ($controller == 'user') {
+                    if ($logged == true) {
+                        $this->_controllerObj->$actionName();
+                    } else {                        
+                        $this->callActionLogin($module);
+                    }
+                    
+                } else {
+                    $this->_controllerObj->$actionName();
+                }                
             }
         } else {
             URL::redirect('default', 'index', 'notice', array('type' => 'not-url'));

@@ -12,7 +12,7 @@
     $rowEmail     = Helper::cmsRow('Email'   , Helper::cmsInput('text', 'form[email]', 'form-email', $dataForm['email'], false, 'contact_input', ''));
     $rowSubmit    = Helper::cmsRow('Submit'  , $inputSubmit . $inputToken, true);
 
-    $linkAction   = URL::createLink('default', 'user', 'register');
+    $linkAction   = URL::createLink('default', 'index', 'register');
 ?>
 
 <div class="title">
