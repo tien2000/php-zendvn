@@ -50,6 +50,7 @@ class IndexController extends Controller{
     }
 
     public function indexAction(){
+        $userInfo = Session::get('user');
         $this->_templateObj->setFolderTemplate('admin/main');
         $this->_templateObj->setFileTemplate('index.php');
         $this->_templateObj->setFileConfig('template.ini');

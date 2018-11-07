@@ -39,7 +39,11 @@
 
     switch ($this->_arrParams['action']) {
         case 'index':
+        if ($controller == 'group') {
+            $strBtn = $btnPublish . $btnUnpublish . $btnOrdering;
+        } else {
             $strBtn = $btnNew . $btnPublish . $btnUnpublish . $btnOrdering . $btnTrash;
+        }
             break;
 
         case 'form':

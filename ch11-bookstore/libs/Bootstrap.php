@@ -34,6 +34,8 @@ class Bootstrap{
             $module     = $this->_params['module'];
             $controller = $this->_params['controller'];
             $action     = $this->_params['action'];
+            $requestURL = "$module-$controller-$action";
+
             $userInfo   = Session::get('user');
             // Session::delete('user');
 
@@ -43,7 +45,11 @@ class Bootstrap{
             if ($module == 'admin') {
                 if ($logged == true) {
                     if ($userInfo['group_acp'] == 1) {
-                        $this->_controllerObj->$actionName();
+                        if (in_array($requestURL, $userInfo['info']['privilege']) ==true) {
+                            $this->_controllerObj->$actionName();
+                        } else{
+                            URL::redirect('default', 'index', 'notice', array('type' => 'not-permision'));
+                        }                        
                     } else {
                         URL::redirect('default', 'index', 'notice', array('type' => 'not-permision'));
                     }                    
