@@ -1,10 +1,14 @@
 <?php 
-    class UserModel extends Model{    
-    private $_columns = array('id', 'username', 'email', 'fullname', 'password', 'created', 'created_by', 'modified', 'modified_by', 'status', 'ordering', 'group_id');
-    
+    class CategoryModel extends Model{    
+    private $_columns = array('id', 'name', 'picture', 'created', 'created_by', 'modified', 'modified_by', 'status', 'ordering');
+    private $_userInfo;
+
     public function __construct() {
         parent::__construct();
-        $this->setTable(TBL_USER);
+        $this->setTable(TBL_CATEGORY);
+
+        $userObj         = Session::get('user');
+        $this->_userInfo = $userObj['info'];
     }
 
     public function countItems($arrParams, $options = null){
@@ -14,23 +18,13 @@
         
         // FILTER: KEYWORD
         if (!empty($arrParams['filter']['search'])) {
-            $keyword = "%" . $arrParams['filter']['search'] . "%";
-            $query[]    = "AND (`username` LIKE '$keyword' OR `email` LIKE '$keyword')";
+            $keyword    = "%" . $arrParams['filter']['search'] . "%";
+            $query[]    = "AND `name` LIKE '". $keyword ."'";
         }
 
         // FILTER: STATUS
         if (isset($arrParams['filter']['status']) && $arrParams['filter']['status'] != 'default') {
             $query[]    = "AND `status` = '". $arrParams['filter']['status'] ."'";
-        }     
-        
-        // FILTER: GROUP ID
-        if (isset($arrParams['filter']['group-id']) && $arrParams['filter']['group-id'] != 'default') {
-            $query[]    = "AND `group_id` = '". $arrParams['filter']['group-id'] ."'";
-        }     
-
-        // FILTER: GROUP ACP
-        if (isset($arrParams['filter']['group-acp']) && $arrParams['filter']['group-acp'] != 'default') {
-            $query[]    = "AND `group_acp` = '". $arrParams['filter']['group-acp'] ."'";          
         }
 
         $query = implode(" ", $query);
@@ -39,33 +33,29 @@
     }
 
     public function listItems($arrParams, $options = null){
-        $query[]        = "SELECT u.`id`, u.`username`, u.`email`, u.`fullname`, u.`created`, u.`created_by`, u.`modified`, u.`modified_by`, u.`status`, u.`ordering`, g.`name` AS `group_name`";
-        $query[]        = "FROM `$this->_table` AS `u` LEFT JOIN `" . TBL_GROUP . "` AS `g` ON u.group_id = g.id";
-        $query[]        = "WHERE u.id > 0";
+        $flagWhere      = false;
+        $query[]        = "SELECT `id`, `name`, `created`, `created_by`, `modified`, `modified_by`, `status`, `ordering`";
+        $query[]        = "FROM `$this->_table`";
+        $query[]        = "WHERE `id` > 0";
         
         // FILTER: KEYWORD
         if (!empty($arrParams['filter']['search'])) {
-            $keyword    = "%" . $arrParams['filter']['search'] . "%";
-            $query[]    = "AND (`username` LIKE '$keyword' OR `email` LIKE '$keyword')";
+            $keyword = "%" . $arrParams['filter']['search'] . "%";
+            $query[]    = "AND `name` LIKE '". $keyword ."'";
         }
 
         // FILTER: STATUS
         if (isset($arrParams['filter']['status']) && $arrParams['filter']['status'] != 'default') {
-            $query[]    = "AND u.`status` = '". $arrParams['filter']['status'] ."'";
-        }
-
-        // FILTER: GROUP ID
-        if (isset($arrParams['filter']['group-id']) && $arrParams['filter']['group-id'] != 'default') {
-            $query[]    = "AND u.`group_id` = '". $arrParams['filter']['group-id'] ."'";
+            $query[]    = "AND `status` = '". $arrParams['filter']['status'] ."'";         
         }
 
         // SORT
         if (!empty(@$arrParams['filter_column']) && !empty(@$arrParams['filter_column_dir'])) {
             $column     = $arrParams['filter_column'];
             $columnDir  = $arrParams['filter_column_dir'];
-            $query[]    = "ORDER BY u.`$column` $columnDir";
+            $query[]    = "ORDER BY `$column` $columnDir";
         } else {
-            $query[]    = "ORDER BY `username` ASC";
+            $query[]    = "ORDER BY `name` ASC";
         }        
 
         // PAGINATION
@@ -83,24 +73,27 @@
     }
 
     public function changeStatus($arrParams, $options = null){
+        $modified    = date('Y-m-d', time());
+        $modified_by = $this->_userInfo['username'];
         if ($options['task'] == 'ajax-change-status') {
-            $status = ($arrParams['status'] == 0) ? 1 : 0 ;
-            $id = $arrParams['id'];
-            $query = "UPDATE `$this->_table` SET `status` = $status WHERE `id` = $id";
+            $status      = ($arrParams['status'] == 0) ? 1 : 0 ;
+            
+            $id          = $arrParams['id'];
+            $query       = "UPDATE `$this->_table` SET `status` = $status, `modified` = '$modified', `modified_by` = '$modified_by' WHERE `id` = $id";
             $this->query($query);
             $result = array(
                             'id'        => $id,
                             'status'    => $status,
-                            'link'      => URL::createLink('admin', 'user', 'ajaxStatus', array('id' => $id, 'status' => $status))
+                            'link'      => URL::createLink('admin', 'category', 'ajaxStatus', array('id' => $id, 'status' => $status))
                         );
             return $result;
         }
 
         if ($options['task'] == 'change-status') {
-            $status = $arrParams['type'];
+            $status      = $arrParams['type'];
             if (!empty($arrParams['cid'])) {
                 $ids   = $this->createWhereDeleteSQL($arrParams['cid']);
-                $query = "UPDATE `$this->_table` SET `status` = $status WHERE `id` IN ($ids)";
+                $query = "UPDATE `$this->_table` SET `status` = $status, `modified` = '$modified', `modified_by` = '$modified_by' WHERE `id` IN ($ids)";
                 $this->query($query);
                 $statusMessage = ($status == 0) ? 'unpublish' : 'publish' ;
                 Session::set('message', array('class' => 'success', 'content' => 'Update Successfully!', 'items' => $this->affectedRow() . ' module '. $statusMessage .' .'));
@@ -125,7 +118,7 @@
 
     public function infoItem($arrParams, $options = null){
         if ($options == null) {
-            $query[] = "SELECT `id`, `username`, `email`, `fullname`, `group_id`, `status`, `ordering`";
+            $query[] = "SELECT `id`, `name`, `picture`, `status`, `ordering`";
             $query[] = "FROM `$this->_table`";
             $query[] = "WHERE `id` = '". $arrParams['id'] ."'";
 
@@ -138,8 +131,7 @@
     public function saveItems($arrParams, $options = null){
         if ($options['task'] == 'add') {
             $arrParams['form']['created'] = date('Y-m-d', time());
-            $arrParams['form']['created_by'] = 1;
-            $arrParams['form']['password'] = md5($arrParams['form']['password']);
+            $arrParams['form']['created_by'] = $this->_userInfo['username'];
             $data = array_intersect_key($arrParams['form'], array_flip($this->_columns));
             $this->insert($data);
             Session::set('message', array('class' => 'success', 'content' => 'Successfully!', 'items' => $this->affectedRow() . ' module added.'));
@@ -147,16 +139,8 @@
         }
 
         if ($options['task'] == 'edit') {
-            // Cannot change username
-            unset($arrParams['form']['username']);
-
             $arrParams['form']['modified'] = date('Y-m-d', time());
-            $arrParams['form']['modified_by'] = 1;
-            if ($arrParams['form']['password'] != null) {
-                $arrParams['form']['password'] = md5($arrParams['form']['password']);
-            } else {
-                unset($arrParams['form']['password']);
-            }
+            $arrParams['form']['modified_by'] = $this->_userInfo['username'];
             $data = array_intersect_key($arrParams['form'], array_flip($this->_columns));
             $this->update($data, array(array('id', $arrParams['form']['id'])));
             Session::set('message', array('class' => 'success', 'content' => 'Successfully!', 'items' => $this->affectedRow() . ' module added.'));
@@ -165,27 +149,19 @@
     }
 
     public function ordering($arrParams, $options = null){
+        $modified    = date('Y-m-d', time());
+        $modified_by = $this->_userInfo['username'];
         if ($options == null) {
             if (!empty($arrParams['order'])) {
                 $i = 0;
                 foreach ($arrParams['order'] as $id => $ordering) {
                     $i++;
-                    $query = "UPDATE `$this->_table` SET `ordering` = $ordering WHERE `id` = $id";    
-                    $this->query($query);                
+                    $query = "UPDATE `$this->_table` SET `ordering` = $ordering, `modified` = '$modified', `modified_by` = '$modified_by' WHERE `id` = $id";    
+                    $this->query($query);
                 }
                 Session::set('message', array('class' => 'success', 'content' => 'Update Successfully!', 'items' => ''));
             }
         }
-    }    
-
-    public function itemsInSelectBox($arrParams, $options = null){
-        if ($options == null) {
-            $query = "SELECT `id`, `name` FROM `". TBL_GROUP ."`";            
-            $result = $this->fetchPairs($query);
-            $result['default'] = '- Select Group -';
-            ksort($result);
-        }
-        return $result;
     }
 }
 ?>

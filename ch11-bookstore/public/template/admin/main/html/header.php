@@ -1,12 +1,16 @@
 <?php 
-    $linkControlPanel   = URL::createLink("admin", "index", "index");
-    $linkConfiguration  = URL::createLink("admin", "configuration", "index");
-    $linkUserManager    = URL::createLink("admin", "user", "index");
-    $linkAddUser        = URL::createLink("admin", "user", "form");
-    $linkGroupManager   = URL::createLink("admin", "group", "index");
-    $linkAddGroup       = URL::createLink("admin", "group", "form");
-    $linkLogout         = URL::createLink("admin", "index", "logout");
-    $linkEditAccount    = URL::createLink("admin", "index", "profile");
+    $linkControlPanel       = URL::createLink("admin", "index", "index");
+    $linkConfiguration      = URL::createLink("admin", "configuration", "index");
+    $linkUserManager        = URL::createLink("admin", "user", "index");
+    $linkAddUser            = URL::createLink("admin", "user", "form");
+    $linkGroupManager       = URL::createLink("admin", "group", "index");    
+    $linkAddGroup           = URL::createLink("admin", "group", "form");
+    $linkCategoryManager    = URL::createLink("admin", "category", "index");
+    $linkAddCategory        = URL::createLink("admin", "category", "form");
+    $linkBookManager        = URL::createLink("admin", "book", "index");
+    $linkAddBook            = URL::createLink("admin", "book", "form");
+    $linkLogout             = URL::createLink("admin", "index", "logout");
+    $linkEditAccount        = URL::createLink("admin", "index", "profile");
 ?>
 
 <body class="admin com_modules view- layout- task- itemid-0" data-basepath="/joomla" cz-shortcut-listen="true">
@@ -70,6 +74,29 @@
                                     <ul class="dropdown-menu menu-scrollable">
                                         <li>
                                             <a class="no-dropdown menu-newarticle" href="<?php echo $linkAddGroup; ?>">Add New Group</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="dropdown">
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">Book Shopping
+                                <span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu scroll-menu">                                
+                                <li class="dropdown-submenu">
+                                    <a class="dropdown-toggle menu-category" data-toggle="dropdown" href="<?php echo $linkCategoryManager; ?>">Category</a>
+                                    <ul class="dropdown-menu menu-scrollable">
+                                        <li>
+                                            <a class="no-dropdown menu-newarticle" href="<?php echo $linkAddCategory; ?>">Add New Category</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="dropdown-submenu">
+                                    <a class="dropdown-toggle menu-book" data-toggle="dropdown" href="<?php echo $linkBookManager; ?>">Book</a>
+                                    <ul class="dropdown-menu menu-scrollable">
+                                        <li>
+                                            <a class="no-dropdown menu-newarticle" href="<?php echo $linkAddBook; ?>">Add New Book</a>
                                         </li>
                                     </ul>
                                 </li>

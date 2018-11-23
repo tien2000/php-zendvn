@@ -2,7 +2,7 @@
     $arrMenu = array(
                     array('link' => URL::createLink('admin', 'book', 'add')         , 'name' => 'New Article'   , 'icon' => 'icon-pencil-2' ),
                     array('link' => URL::createLink('admin', 'book', 'index')       , 'name' => 'Article'       , 'icon' => 'icon-stack'    ),
-                    array('link' => URL::createLink('admin', 'categories', 'index') , 'name' => 'Categories'    , 'icon' => 'icon-folder'   ),
+                    array('link' => URL::createLink('admin', 'category', 'index')   , 'name' => 'Categories'    , 'icon' => 'icon-folder'   ),
                     array('link' => URL::createLink('admin', 'media', 'index')      , 'name' => 'Media'         , 'icon' => 'icon-pictures' )
                 );
 

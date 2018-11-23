@@ -1,5 +1,5 @@
 <?php 
-class GroupController extends Controller{
+class CategoryController extends Controller{
     public function __construct($arrParams) {
         parent::__construct($arrParams);
         
@@ -9,9 +9,9 @@ class GroupController extends Controller{
         $this->_templateObj->load();
     }
 
-    // ACTION: LIST GROUP
+    // ACTION: LIST CATEGORY
     public function indexAction(){
-        $this->_view->_title = 'Users Groups: List';
+        $this->_view->_title = 'Category Manager: List';
 
         // Pagination
         $configPagination = array('totalItemsPerPage' => 5, 'pageRange' => 3);
@@ -20,25 +20,24 @@ class GroupController extends Controller{
         $this->_view->pagination = new Pagination($totalItems, $this->_pagination);
         $this->_view->items      =  $this->_model->listItems($this->_arrParams, null);
         
-        $this->_view->render('group/index');        
+        $this->_view->render('category/index');        
     }
 
-    // ACTION: FORM: ADD & EDIT GROUP
+    // ACTION: FORM: ADD & EDIT Category
     public function formAction(){
-        $this->_view->_title = 'Users: New Group';
+        $this->_view->_title = 'Category Manager: Add';
 
         if (isset($this->_arrParams['id'])) {
-            $this->_view->_title = 'Users: Edit Group';
+            $this->_view->_title = 'Category Manager: Edit';
             $this->_arrParams['form'] = $this->_model->infoItem($this->_arrParams);       
-            if(empty($this->_arrParams['form'])) URL::redirect('admin', 'group', 'index');
+            if(empty($this->_arrParams['form'])) URL::redirect('admin', 'category', 'index');
         }
 
         if (@$this->_arrParams['form']['token'] > 0) {
             $validate = new Validate($this->_arrParams['form']);
             $validate->addRule('name',      'string', array('min'  => 3, 'max' => 255))
                      ->addRule('ordering',  'int',    array('min'  => 0, 'max' => 100))
-                     ->addRule('status',    'status', array('deny' => array('default')))
-                     ->addRule('group_acp', 'status', array('deny' => array('default')));
+                     ->addRule('status',    'status', array('deny' => array('default')));
             $validate->run();
             $this->_arrParams['form'] = $validate->getResult();
             if ($validate->isValid() == false) {
@@ -47,14 +46,14 @@ class GroupController extends Controller{
                 $task = (isset($this->_arrParams['form']['id'])) ? 'edit' : 'add';
                 $id = $this->_model->saveItems($this->_arrParams, array('task' => $task));
                 $type = $this->_arrParams['type'];
-                if ($type == 'save-closed') URL::redirect('admin', 'group', 'index');
-                if ($type == 'save-new')    URL::redirect('admin', 'group', 'form');
-                if ($type == 'apply')       URL::redirect('admin', 'group', 'form', array('id' => $id));
+                if ($type == 'save-closed') URL::redirect('admin', 'category', 'index');
+                if ($type == 'save-new')    URL::redirect('admin', 'category', 'form');
+                if ($type == 'apply')       URL::redirect('admin', 'category', 'form', array('id' => $id));
             }
         }
 
         $this->_view->arrParam = $this->_arrParams;
-        $this->_view->render('group/form');
+        $this->_view->render('category/form');
     }
 
     // ACTION: AJAX STATUS (*)
@@ -63,28 +62,22 @@ class GroupController extends Controller{
         echo json_encode($result);
     }
 
-    // ACTION: AJAX GROUP ACP (*)
-    public function ajaxGroupACPAction(){
-        $result = $this->_model->changeStatus($this->_arrParams, array('task' => 'ajax-change-group-acp'));
-        echo json_encode($result);
-    }
-
     // ACTION: STATUS (*)
     public function statusAction(){
         $result = $this->_model->changeStatus($this->_arrParams, array('task' => 'change-status'));
-        URL::redirect('admin', 'group', 'index');
+        URL::redirect('admin', 'category', 'index');
     }
 
     // ACTION: TRASH (*)
     public function trashAction(){
         $result = $this->_model->deleteItems($this->_arrParams);
-        URL::redirect('admin', 'group', 'index');
+        URL::redirect('admin', 'category', 'index');
     }
 
     // ACTION: ORDERING (*)
     public function orderingAction(){
         $result = $this->_model->ordering($this->_arrParams);
-        URL::redirect('admin', 'group', 'index');
+        URL::redirect('admin', 'category', 'index');
     }
 }
 ?>

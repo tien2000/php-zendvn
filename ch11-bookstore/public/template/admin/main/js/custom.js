@@ -33,7 +33,12 @@ function submitForm(url) {
 
     $('#groupForm').attr('action', url);
     $('#groupForm').submit();
+
+    $('#categoryForm').attr('action', url);
+    $('#categoryForm').submit();
 }
+
+
 
 function sortList(column, order) {
     $('input[name=filter_column]').val(column);

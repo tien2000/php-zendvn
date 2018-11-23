@@ -1,6 +1,6 @@
 <?php
     $controller = $this->_arrParams['controller'];
-    
+        
     // New
     $linkNew        = URL::createLink('admin', $controller, 'form');
     $btnNew         = Helper::cmsButton('new', 'toolbar-new', 'icon-plus icon-white', 'btn-success', $linkNew, 'new');
